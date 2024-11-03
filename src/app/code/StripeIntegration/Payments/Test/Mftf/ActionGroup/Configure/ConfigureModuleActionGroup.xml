@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="ConfigureModuleActionGroup">
+        <annotations>
+            <description>Configure the Stripe module.</description>
+        </annotations>
+        <arguments>
+            <argument name="active" defaultValue="1" type="string"/>
+            <argument name="mode" defaultValue="test" type="string"/>
+            <argument name="pk" defaultValue="{{_CREDS.stripe/acc_de_pk}}" type="string"/>
+            <argument name="sk" defaultValue="{{_CREDS.stripe/acc_de_sk}}" type="string"/>
+            <argument name="baseCurrency" defaultValue="EUR" type="string"/>
+            <argument name="allowedCurrencies" defaultValue="{{Currency.allowedCurrencies}}" type="string"/>
+            <argument name="defaultCurrency" defaultValue="EUR" type="string"/>
+            <argument name="pmc" defaultValue="''" type="string"/>
+        </arguments>
+
+        <magentoCLI command="config:set payment/stripe_payments/active {{active}}" stepKey="activateStripe"/>
+        <magentoCLI command="config:set payment/stripe_payments_basic/stripe_mode {{mode}}" stepKey="setStripeMode"/>
+        <magentoCLI command="config:set payment/stripe_payments_basic/stripe_test_pk {{pk}}" stepKey="setPublishableKey"/>
+        <magentoCLI command="config:set payment/stripe_payments_basic/stripe_test_sk {{sk}}" stepKey="setSecretKey"/>
+        <magentoCLI command="config:set currency/options/base {{baseCurrency}}" stepKey="saveBaseCurrency"/>
+        <magentoCLI command="config:set currency/options/allow {{allowedCurrencies}}" stepKey="saveAllowedCurrency"/>
+        <magentoCLI command="config:set currency/options/default {{defaultCurrency}}" stepKey="saveDefaultCurrency"/>
+        <magentoCLI command="config:set payment/stripe_payments/payments/payment_method_configuration {{pmc}}" stepKey="setPaymentMethodConfiguration"/>
+        <magentoCLI command="cache:clean config" stepKey="cleanConfigCache"/>
+
+    </actionGroup>
+</actionGroups>

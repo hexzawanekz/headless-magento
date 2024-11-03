@@ -1,0 +1,13 @@
+.adminhtml-system_config-edit .accordion .section-config {
+    margin-bottom: -1px;
+}
+.stripe_tax_registrations .registrations {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+.stripe_tax_registrations .active {
+    color: green;
+}
+.stripe_tax_registrations .inactive {
+    color: red;
+}

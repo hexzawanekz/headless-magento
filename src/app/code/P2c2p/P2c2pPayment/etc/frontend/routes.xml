@@ -1,0 +1,7 @@
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:App/etc/routes.xsd">
+    <router id="standard">
+        <route id="P2c2p" frontName="p2c2p">
+            <module name="P2c2p_P2c2pPayment" />
+        </route>
+    </router>
+</config>

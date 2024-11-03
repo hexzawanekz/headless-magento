@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="SelectRedirectPaymentMethodActionGroup">
+        <annotations>
+            <description>Switch to Stripe iFrame, switch to Redirect payment method like (BanContact, P24 etc).</description>
+        </annotations>
+        <arguments>
+            <argument name="paymentMethodTabId" defaultValue="#card-tab" type="string"/>
+            <argument name="paymentMethodName" defaultValue="card" type="string"/>
+        </arguments>
+
+        <!-- Select the payment method if it exists in the payment method selector tab -->
+        <conditionalClick selector="{{paymentMethodTabId}}"
+                          dependentSelector="{{paymentMethodTabId}}"
+                          visible="true" stepKey="selectPaymentMethodBoxDefault"/>
+
+        <!-- Select payment method based on the input -->
+        <helper class="StripeIntegration\Payments\Test\Mftf\Helper\PaymentMethodSelectHelper" method="selectPaymentMethodOption" stepKey="selectPaymentMethodOption">
+            <argument name="optionSelector">{{StorefrontStripePaymentMethodSection.additionalPaymentSelectBox}}</argument>
+            <argument name="optionInput">{{paymentMethodName}}</argument>
+        </helper>
+        <click selector="{{paymentMethodTabId}}" stepKey="selectRedirectPaymentMethodTab"/>
+
+        <!-- Wait for the payment method form to load -->
+        <waitForElementVisible selector=".p-PaymentDetails-group" stepKey="waitForPaymentDetailsGroup" time="5"/>
+
+    </actionGroup>
+</actionGroups>

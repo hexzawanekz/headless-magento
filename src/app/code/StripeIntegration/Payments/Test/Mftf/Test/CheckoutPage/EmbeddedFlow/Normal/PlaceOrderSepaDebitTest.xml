@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="PlaceOrderSepaDebitTest" extends="PlaceOrderEmbeddedFlowTest">
+        <annotations>
+            <features value="Order"/>
+            <stories value="Embedded Flow"/>
+            <title value="Guest customer normal order with Stripe SEPA Debit payment method"/>
+            <description value="With Guest Customer ; and a selected store view currency of EUR Currency, add to the cart the products of NormalCart , proceed to the checkout page and specify UK Address as the shipping address and FlatRateShippingMethod as the shipping method. Click Next and specify StripeElementsMethod as the payment method, using SEPA Debit payment method. Finally click Place Order."/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="Normal"/>
+            <group value="cart_normal"/>
+            <group value="payment_method_sepa_debit"/>
+            <group value="embedded_flow"/>
+            <group value="customer_guest"/>
+            <group value="stripe"/>
+        </annotations>
+
+        <before>
+            <actionGroup ref="ConfigureModuleActionGroup" stepKey="configureModule">
+                <argument name="pmc" value="{{AccDE.sepaDebit}}"/>
+            </actionGroup>
+            <createData entity="ProductsCategory" stepKey="createCategory"/>
+            <createData entity="StripeSimpleProduct" stepKey="createProduct">
+                <requiredEntity createDataKey="createCategory"/>
+            </createData>
+        </before>
+
+        <!-- Select Sepa payment method tab -->
+        <actionGroup ref="SelectAccordionPaymentMethodActionGroup" stepKey="selectPaymentMethod">
+            <argument name="accordionButton" value="{{StorefrontStripePaymentMethodSection.paymentElementAccordionButtonSepaDebit}}" />
+        </actionGroup>
+
+        <!-- Fill the IBAN number -->
+        <actionGroup ref="FillPaymentFormSepaDebitSuccessActionGroup" stepKey="fillPaymentForm" />
+
+        <!-- Skip the authorizeExternally step -->
+        <actionGroup ref="SkipActionGroup" stepKey="authorizeExternally"/>
+
+        <after>
+            <deleteData createDataKey="createProduct" stepKey="deleteProduct"/>
+            <deleteData createDataKey="createCategory" stepKey="deleteCategory"/>
+        </after>
+    </test>
+</tests>

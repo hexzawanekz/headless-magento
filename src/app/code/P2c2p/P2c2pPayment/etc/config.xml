@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../../lib/internal/Magento/Framework/ObjectManager/etc/config.xsd">
+    <default>
+        <payment>
+            <p2c2ppayment>
+                <payment_action>authorize</payment_action> <!-- You can use another methor like capture  -->
+                <model>P2c2p\P2c2pPayment\Model\PaymentMethod</model>
+                <active>0</active>
+                <title>Credit / Debit Card and Cash Payment (2C2P)</title>
+                <order_status>Pending_2C2P</order_status>                
+                <visible_on_front>0</visible_on_front>
+                <allowspecific>0</allowspecific>                
+            </p2c2ppayment>
+        </payment>
+    </default>
+</config>

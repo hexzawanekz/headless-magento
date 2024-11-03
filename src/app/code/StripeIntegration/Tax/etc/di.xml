@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+
+    <type name="Magento\Tax\Model\Sales\Total\Quote\Tax">
+        <plugin name="stripeIntegration_model_sales_total_quote_tax" type="StripeIntegration\Tax\Plugin\Tax\Model\Sales\Total\Quote\TaxPlugin"/>
+    </type>
+    <type name="Magento\Tax\Model\Config">
+        <plugin name="stripeIntegration_model_config" type="StripeIntegration\Tax\Plugin\Tax\Model\ConfigPlugin" sortOrder="25" />
+    </type>
+    <type name="Magento\Tax\Model\Calculation\AbstractCalculator">
+        <plugin name="stripeIntegration_model_tax_calculation_abstractCalculator" type="StripeIntegration\Tax\Plugin\Tax\Model\Calculation\AbstractCalculatorPlugin"/>
+    </type>
+    <type name="Magento\Tax\Helper\Data">
+        <plugin name="stripeIntegration_model_helper_dataPlugin" type="StripeIntegration\Tax\Plugin\Tax\Helper\DataPlugin" />
+    </type>
+
+    <type name="Magento\Quote\Model\Quote\Address\ToOrder">
+        <plugin name="stripeIntegration_quote_to_order" type="StripeIntegration\Tax\Plugin\Quote\Model\Quote\Address\ToOrder" sortOrder="30"/>
+    </type>
+    <type name="Magento\Sales\Model\OrderRepository">
+        <plugin name="stripeIntegration_save_order" type="StripeIntegration\Tax\Plugin\Sales\Model\OrderRepository" sortOrder="30"/>
+    </type>
+
+    <type name="Magento\Sales\Model\Order\Invoice\Total\Tax">
+        <plugin name="stripeIntegration_invoice_tax" type="StripeIntegration\Tax\Plugin\Sales\Model\Order\Invoice\Total\Tax" sortOrder="30"/>
+    </type>
+
+    <type name="Magento\GiftWrapping\Model\Total\Invoice\Tax\Giftwrapping">
+        <plugin name="stripeIntegration_giftwrapping_invoice_tax" type="StripeIntegration\Tax\Plugin\GiftWrapping\Model\Total\Invoice\Tax\GiftwrappingPlugin"/>
+    </type>
+
+    <type name="Magento\GiftWrapping\Model\Total\Creditmemo\Tax\Giftwrapping">
+        <plugin name="stripeIntegration_giftwrapping_creditmemo_tax" type="StripeIntegration\Tax\Plugin\GiftWrapping\Model\Total\Creditmemo\Tax\GiftwrappingPlugin"/>
+    </type>
+
+    <!-- Tax Logger -->
+    <type name="StripeIntegration\Tax\Logger\Handler">
+        <arguments>
+            <argument name="filesystem" xsi:type="object">Magento\Framework\Filesystem\Driver\File</argument>
+            <argument name="dir" xsi:type="object">Magento\Framework\App\Filesystem\DirectoryList</argument>
+        </arguments>
+    </type>
+
+    <type name="StripeIntegration\Tax\Logger\TaxLogger">
+        <arguments>
+            <argument name="name" xsi:type="string">tax</argument>
+            <argument name="handlers"  xsi:type="array">
+                <item name="system" xsi:type="object">StripeIntegration\Tax\Logger\Handler</item>
+            </argument>
+        </arguments>
+    </type>
+</config>

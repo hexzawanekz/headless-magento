@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="payment">
+            <group id="p2c2ppayment" translate="label" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>2c2p Module</label>
+                <field id="active" translate="label comment" sortOrder="1" type="select" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Enable</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <validate>p2c2p-enable-plugin</validate>
+                </field>
+                <field id="title" translate="label" type="text" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Title</label>
+                    <validate>p2c2p-required-entry</validate>
+                </field>
+                <field id="mode" translate="label" type="select" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Mode</label>
+                    <source_model>P2c2p\P2c2pPayment\Model\PaymentModeType</source_model>                    
+                </field>
+                <field id="payment_action" translate="label" type="select" sortOrder="4" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Settlement</label>
+                    <source_model>P2c2p\P2c2pPayment\Model\SettlementType</source_model>                    
+                </field>
+                <field id="merchantId" translate="label" type="text" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Merchant Id</label>
+                    <validate>p2c2p-required-entry</validate>
+                </field>
+                <field id="secretKey" translate="label" type="text" sortOrder="6" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Secret Key</label>
+                    <validate>p2c2p-required-entry</validate>
+                </field>
+                <field id="storedCard" translate="label" type="select" sortOrder="7" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Enable Stored Card</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>                    
+                </field>
+                <field id="paymentExpiry" translate="label" type="text" sortOrder="8" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>123 Payment Expiry (hours)</label>                    
+                    <validate>p2c2p-required-entry p2c2p-validate-digits p2c2p-expiry digits-range-8-720</validate>
+                </field>
+                <field id="toc2p_lang" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Select Language</label>
+                    <source_model>P2c2p\P2c2pPayment\Model\PaymentLangType</source_model>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

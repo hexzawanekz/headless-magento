@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="ConfirmBacsDebitActionGroup">
+        <annotations>
+            <description>Clicks on the BACS confirm button.</description>
+        </annotations>
+
+        <waitForElement selector="{{StorefrontStripeBacsiFrameSection.bacsIframe}}" time="30" stepKey="waitForBacsIframe"/>
+        <switchToIFrame selector="{{StorefrontStripeBacsiFrameSection.bacsIframe}}" stepKey="switchToBacsIframe"/>
+        <waitForElementVisible selector="{{StorefrontStripeBacsiFrameSection.confirmButton}}" time="5" stepKey="waitForBacsModalConfirmButton"/>
+        <click selector="{{StorefrontStripeBacsiFrameSection.confirmButton}}" stepKey="clickConfirmButton"/>
+        <switchToIFrame stepKey="switchOutBacsIframe"/>
+
+    </actionGroup>
+</actionGroups>

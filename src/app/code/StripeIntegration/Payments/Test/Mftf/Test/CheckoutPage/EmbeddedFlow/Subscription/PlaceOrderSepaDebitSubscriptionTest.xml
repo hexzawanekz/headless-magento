@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="PlaceOrderSepaDebitSubscriptionTest" extends="PlaceOrderEmbeddedFlowTest">
+        <annotations>
+            <features value="Order"/>
+            <stories value="Embedded Flow"/>
+            <title value="Guest customer normal order with Stripe SEPA Debit payment method with Subscription product"/>
+            <description value="As a guest customer, I can place a subscription order using SEPA Debit."/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="Subscriptions"/>
+            <group value="cart_subscription"/>
+            <group value="payment_method_sepa_debit"/>
+            <group value="embedded_flow"/>
+            <group value="customer_guest"/>
+            <group value="stripe"/>
+        </annotations>
+
+        <before>
+            <actionGroup ref="ConfigureModuleActionGroup" stepKey="configureModule">
+                <argument name="pmc" value="{{AccDE.sepaDebit}}"/>
+            </actionGroup>
+            <createData entity="ProductsCategory" stepKey="createCategory"/>
+            <createData entity="SimpleMonthlySubscriptionProduct" stepKey="createProduct">
+                <requiredEntity createDataKey="createCategory"/>
+            </createData>
+            <magentoCLI command="stripe:mftf:configure-subscription-product $$createProduct.id$$ SimpleMonthlySubscription" stepKey="configureSubscriptionProduct"/>
+        </before>
+
+        <actionGroup ref="SubscriptionCartActionGroup" stepKey="createCart" />
+
+        <actionGroup ref="SkipActionGroup" stepKey="waitForStripePaymentMethodCheckbox" />
+        <actionGroup ref="SkipActionGroup" stepKey="selectStripePaymentMethod" />
+
+        <!-- Select Sepa payment method tab -->
+        <actionGroup ref="SelectAccordionPaymentMethodActionGroup" stepKey="selectPaymentMethod">
+            <argument name="accordionButton" value="{{StorefrontStripePaymentMethodSection.paymentElementAccordionButtonSepaDebit}}" />
+        </actionGroup>
+
+        <!-- Fill the IBAN number -->
+        <actionGroup ref="FillPaymentFormSepaDebitSuccessActionGroup" stepKey="fillPaymentForm" />
+
+        <!-- Skip the authorizeExternally step -->
+        <actionGroup ref="SkipActionGroup" stepKey="authorizeExternally"/>
+
+        <after>
+            <deleteData createDataKey="createProduct" stepKey="deleteProduct"/>
+            <deleteData createDataKey="createCategory" stepKey="deleteCategory"/>
+        </after>
+    </test>
+</tests>

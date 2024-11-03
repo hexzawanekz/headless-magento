@@ -1,0 +1,204 @@
+<div class="form-inline admin__stripe-tax-classes">
+  <form id="tax-classes-form" method="post">
+    <input type="hidden" name="form_key" data-bind="value: formKey">
+    <input type="hidden" name="tax_classes" value="">
+    <fieldset class="admin__fieldset">
+      <legend class="admin__legend">
+        <span data-bind="i18n: 'Add, edit or remove tax classes'"></span>
+      </legend>
+
+      <div class="admin__field">
+        <label class="admin__field-label">
+          <span data-bind="i18n: 'Tax Classes'"></span>
+        </label>
+        <div class="admin__field-control">
+          <div class="row">
+            <!-- Search -->
+            <span class="tax-class-search">
+              <div class="data-grid-search-control-wrap">
+                <input class="admin__control-text data-grid-search-control" type="text" placeholder="Search tax classes ..." data-bind="value: searchTaxClassesText, valueUpdate: 'input'" />
+                <button class="action-submit" type="button" data-bind="attr: {'aria-label': $t('Search')}" aria-label="Search">
+                  <span data-bind="i18n: 'Search'">Search</span>
+                </button>
+              </div>
+            </span>
+            <!-- Records found -->
+            <span class="tax-class-search-count">
+              <div class="admin__control-support-text _no-wrap">
+                <span data-bind="text: filteredTaxClasses().length"></span>
+                <span data-bind="i18n: 'records'"></span>
+              </div>
+            </span>
+            <!-- Pagination -->
+            <span class="tax-class-pagination-controls" style="float:right; text-align: right;" data-bind="outerClick: closePagination.bind($data)">
+
+              <div class="selectmenu" data-bind="collapsible">
+                <div class="selectmenu-value" data-bind="click: openPagination">
+                  <input type="text" aria-labelledby="per-page-text" data-bind="value: paginationLimit, autoselect, valueUpdate: 'input'">
+                </div>
+                <button class="selectmenu-toggle" type="button" aria-labelledby="per-page-text select-button-text" data-bind="css: {_active: paginationMenuOpened}, click: togglePagination">
+                  <span id="select-button-text" data-bind="i18n: 'Select'">Select</span>
+                </button>
+                <div class="selectmenu-items" data-bind="css: {_active: paginationMenuOpened}">
+                  <ul>
+                    <!-- ko foreach: paginationOptions -->
+                    <li data-repeat-index="0">
+                      <div class="selectmenu-item">
+                          <button class="selectmenu-item-action" type="button" data-bind="text: $data, click: $parent.setPaginationLimit.bind($parent, $data), css: { '_active': $data == $parent.paginationLimit() }">10</button>
+                      </div>
+                    </li>
+                    <!-- /ko -->
+                    <li style="display: none;"></li>
+                  </ul>
+                </div>
+              </div>
+              <label class="admin__control-support-text" id="per-page-text" data-bind="i18n: 'per page'">per page</label>
+
+              <div class="admin__data-grid-pager">
+                  <button class="action-previous" type="button" data-bind="attr: {title: $t('Previous Page')}, click: previousPage, disable: isFirstPage()" title="Previous Page" disabled=""></button>
+                  <input class="admin__control-text" type="number" data-ui-id="current-page-input" data-bind="value: paginationPage, disable: isFirstPage() && isLastPage()">
+                  <label class="admin__control-support-text">
+                    of <span data-bind="text: paginationTotalPages">1</span>
+                  </label>
+                  <button class="action-next" type="button" data-bind="attr: {title: $t('Next Page')}, click: nextPage, disable: isLastPage()" title="Next Page"></button>
+              </div>
+            </span>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- List of tax classes -->
+      <div class="admin__field">
+        <label class="admin__field-label">
+          <span data-bind=""></span>
+        </label>
+        <div class="admin__field-control">
+          <div id="no-tax-classes-message" data-bind="visible: paginatedTaxClasses().length == 0">
+            <span data-bind="i18n: 'No tax classes found.'"></span>
+          </div>
+
+          <!-- ko if: paginatedTaxClasses().length > 0 -->
+          <table id="tax-classes-table" class="admin__dynamic-rows data-grid" data-role="grid" data-bind="css: {'_in-edit': editingRow}">
+            <thead>
+              <tr>
+                <th class="data-grid-th _sortable" data-bind="click: toggleSortByName, css: { _ascend: sortByName() == 'asc', _descend: sortByName() == 'desc' }">
+                  <span class="data-grid-cell-content" data-bind="i18n: 'Name'"></span>
+                </th>
+                <th class="data-grid-th _sortable" data-bind="click: toggleSortByCategory, css: { _ascend: sortByCategory() == 'asc', _descend: sortByCategory() == 'desc' }">
+                  <span class="data-grid-cell-content" data-bind="i18n: 'Category'"></span>
+                </th>
+                <th class="data-grid-th _sortable" data-bind="click: toggleSortByCode, css: { _ascend: sortByCode() == 'asc', _descend: sortByCode() == 'desc' }">
+                  <span class="data-grid-cell-content" data-bind="i18n: 'Code'"></span>
+                </th>
+                <th class="data-grid-th">
+                  <span class="data-grid-cell-content" data-bind="i18n: 'Actions'"></span>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- ko foreach: paginatedTaxClasses -->
+              <tr class="data-row" data-bind="css: {'_odd-row': $index() % 2, 'data-grid-editable-row': $parent.editingRow() === $data}">
+                <!-- ko if: $parent.editingRow() !== $data -->
+                <td>
+                  <span data-bind="text: class_name, click: $parent.renameTaxClass.bind($parent, $data)" class="admin__control-fields _no-header"></span>
+                </td>
+                <td>
+                  <span data-bind="text: stripe_product_tax_code_name" class="admin__control-fields _no-header"></span>
+                </td>
+                <td>
+                  <span data-bind="text: stripe_product_tax_code" class="admin__control-fields _no-header"></span>
+                </td>
+                <!-- /ko -->
+                <!-- ko if: $parent.editingRow() === $data -->
+                <td colspan="3">
+                  <input class="admin__control-text class-name-input" type="text" data-bind="value: class_name, valueUpdate: 'input'" />
+                </td>
+                <!-- /ko -->
+                <td class="admin__control-fields _no-header _no-wrap">
+                  <!-- ko if: $parent.editingRow() !== $data -->
+                  <div class="action-select-wrap" data-bind="css : {
+                        '_active' : $parent.actionsListOpened() === $index()
+                    }">
+                    <button class="action-select" data-bind="i18n: 'Select', click: function(){ $parent.toggleActionsMenu($index()); }">
+                    </button>
+
+                    <ul class="action-menu" data-bind="css: {'_active': $parent.actionsListOpened() === $index()}">
+                      <li>
+                        <a class="action-menu-item action-rename" data-bind="click: $parent.renameTaxClass.bind($parent)">
+                          <span data-bind="i18n: 'Rename'"></span>
+                        </a>
+                      </li>
+                      <li>
+                        <a class="action-menu-item" data-bind="click: $parent.openModalChangeCategory.bind($parent)">
+                          <span data-bind="i18n: 'Set category'"></span>
+                        </a>
+                      </li>
+                      <li>
+                        <a class="action-menu-item" data-bind="click: $parent.unsetTaxClassCategory.bind($parent)">
+                          <span data-bind="i18n: 'Unset category'"></span>
+                        </a>
+                      </li>
+                      <li>
+                        <a class="action-menu-item" data-bind="click: $parent.deleteTaxClass.bind($parent)">
+                          <span data-bind="i18n: 'Delete'"></span>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                  <!-- /ko -->
+                  <!-- ko if: $parent.editingRow() === $data -->
+                  <button class="action-primary" type="button" data-bind="click: $parent.saveTaxClassRow.bind($parent), disable: class_name.trim() === ''">
+                    <span data-bind="i18n: 'Set'"></span>
+                  </button>
+                  <button class="action-tertiary" type="button" data-bind="click: $parent.cancelTaxClassRowEditing.bind($parent)">
+                    <span data-bind="i18n: 'Cancel'"></span>
+                  </button>
+                  <!-- /ko -->
+                </td>
+              </tr>
+              <!-- /ko -->
+            </tbody>
+          </table>
+          <!-- /ko -->
+
+          <!-- Add a new tax class button -->
+          <div id="add-new-tax-class-button">
+            <button class="action-primary" data-bind="click: openModalAddNewTaxClass"><span data-bind="i18n: 'Add a new tax class'"></span></button>
+          </div>
+        </div>
+      </div>
+
+    </fieldset>
+  </form>
+</div>
+
+<!-- ko if: savingChanges -->
+<div data-role="spinner" class="admin__data-grid-loading-mask">
+  <div class="spinner">
+      <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+  </div>
+</div>
+<!-- /ko -->
+
+<div id="tax-class-modal" style="display: none;">
+  <div id="tax-class-searchbox">
+    <div class="data-grid-search-control-wrap">
+      <input class="admin__control-text data-grid-search-control" type="text" placeholder="Search product tax codes ..." data-bind="value: searchText, valueUpdate: 'input'" />
+      <button class="action-submit" type="button" data-bind="attr: {'aria-label': $t('Search')}" aria-label="Search">
+        <span data-bind="i18n: 'Search'">Search</span>
+      </button>
+    </div>
+  </div>
+  <ul id="tax-class-list" data-bind="foreach: filteredProductTaxCodes">
+    <li data-bind="click: $parent.selectProductTaxCode.bind($parent), css: { 'selected': $parent.selectedProductTaxCodeId() == id }">
+      <div class="name" data-bind="text: name"></div>
+      <span class="description" data-bind="text: description"></span>
+    </li>
+  </ul>
+</div>
+
+<div id="stripe-api-error-modal" style="display: none">
+  <div class="message message-error error" data-bind="text: errorUninitialized">
+  </div>
+</div>

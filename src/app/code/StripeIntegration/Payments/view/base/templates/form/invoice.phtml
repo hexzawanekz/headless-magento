@@ -1,0 +1,19 @@
+<?php
+$code = \StripeIntegration\Payments\Model\Method\Invoice::METHOD_CODE;
+?>
+
+<fieldset id="payment_form_<?= $code; //phpcs:ignore ?>" class="stripe-payments standard-form admin__fieldset items payment-method <?= $code; //phpcs:ignore ?>" style="display: none">
+    <div class="fieldset indent">
+        <div class="control payment-method-note">
+            <?= __('An invoice will be sent to the customer by email, which includes a link to a Stripe hosted checkout page. The customer can click that link to fill in their card details securely.'); //phpcs:ignore ?>
+        </div>
+
+        <br>
+        <h4><?= __('Payment due'); //phpcs:ignore ?></h4>
+        <div class="admin__control-addon days-due">
+            <input class="admin__control-text" type="text" name="payment[days_due]" id="invoice_days_due" maxlength="3" value="<?= $block->getDaysDue(); //phpcs:ignore ?>">
+            <label class="admin__addon-suffix" for="invoice_days_due"><?= __('days'); //phpcs:ignore ?></label>
+        </div>
+        <span class="desc"><?= __('after the invoice has been sent.'); //phpcs:ignore ?></span>
+    </div>
+</fieldset>

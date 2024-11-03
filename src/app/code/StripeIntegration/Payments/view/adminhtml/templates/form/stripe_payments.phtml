@@ -1,0 +1,8 @@
+<?php
+  $savedMethodsBlock = $block->getLayout()->createBlock('StripeIntegration\Payments\Block\Adminhtml\SelectPaymentMethod');
+?>
+<fieldset id="payment_form_stripe_payments" class="stripe-payments standard-form admin__fieldset" style="display:none;">
+  <div class="fieldset indent">
+    <?= $savedMethodsBlock->toHtml(); //phpcs:ignore ?>
+  </div>
+</fieldset>

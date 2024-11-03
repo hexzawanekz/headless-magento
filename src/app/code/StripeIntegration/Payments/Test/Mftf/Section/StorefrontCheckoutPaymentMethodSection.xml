@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sections xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:noNamespaceSchemaLocation="urn:magento:mftf:Page/etc/SectionObject.xsd">
+    <section name="StorefrontStripePaymentMethodSection">
+        <element name="stripePaymentMethodRadioEmbedded" type="input" selector="//input[@type='radio' and @name='payment[method]' and @id='stripe_payments']" />
+        <element name="stripePaymentMethodRadioRedirect" type="input" selector="//input[@type='radio' and @name='payment[method]' and @id='stripe_payments_checkout']" />
+        <element name="stripePaymentMethodRadioMultishipping" type="input" selector="//input[@type='radio' and @name='payment[method]' and @id='p_method_stripe_payments']" />
+
+        <element name="paymentElementIframe" type="iframe" selector="//div[@id='stripe-payment-element']//iframe" />
+        <element name="paymentElementTabs" type="block" selector=".p-PaymentMethodSelector"/>
+        <element name="paymentElementAccordion" type="block" selector="//div[contains(@class, 'p-Accordion')]" />
+        <element name="paymentElementAccordionButtonCard" type="button" selector="//div[contains(@class, 'p-AccordionButton') and @data-value='card']" />
+        <element name="paymentElementAccordionButtonSepaDebit" type="button" selector="//div[contains(@class, 'p-AccordionButton') and @data-value='sepa_debit']" />
+        <element name="paymentElementAccordionButtonBancontact" type="button" selector="//div[contains(@class, 'p-AccordionButton') and @data-value='bancontact']" />
+        <element name="paymentElementAccordionButtonIdeal" type="button" selector="//div[contains(@class, 'p-AccordionButton') and @data-value='ideal']" />
+        <element name="paymentElementAccordionButtonP24" type="button" selector="//div[contains(@class, 'p-AccordionButton') and @data-value='p24']" />
+        <element name="paymentElementAccordionButtonPaypal" type="button" selector="//div[contains(@class, 'p-AccordionButton') and @data-value='paypal']" />
+        <element name="paymentElementAccordionButtonSofort" type="button" selector="//div[contains(@class, 'p-AccordionButton') and @data-value='sofort']" />
+        <element name="paymentElementAccordionButtonOxxo" type="button" selector="//div[contains(@class, 'p-AccordionButton') and @data-value='oxxo']" />
+        <element name="paymentElementAccordionButtonAfterpay" type="button" selector="//div[contains(@class, 'p-AccordionButton') and @data-value='afterpay_clearpay']" />
+        <element name="paymentElementAccordionButtonBacsDebit" type="button" selector="//div[contains(@class, 'p-AccordionButton') and @data-value='bacs_debit']" />
+        <element name="paymentElementAccordionButtonAUBECSDebit" type="button" selector="//div[contains(@class, 'p-AccordionButton') and @data-value='au_becs_debit']" />
+        <element name="paymentElementAccordionButtonKlarna" type="button" selector="//div[contains(@class, 'p-AccordionButton') and @data-value='klarna']" />
+
+        <element name="checkPaymentMethodByName" type="radio" selector="//div[@id='checkout-payment-method-load']//div[contains(@class,'payment-method')]//label//span[contains(., '{{methodName}}')]/../..//input" parameterized="true"/>
+        <element name="cardNumberField" type="input" selector="//div[@data-field='number']//input" />
+        <element name="expDateIframe" type="iframe" selector="//div[@id='stripe-payments-card-expiry']//iframe" />
+        <element name="expDateField" type="input" selector="//div[@data-field='expiry']//input" />
+        <element name="cvcIframe" type="iframe" selector="//div[@id='stripe-payments-card-cvc']//iframe" />
+        <element name="cvcField" type="input" selector="//div[@data-field='cvc']//input" />
+        <element name="payByCardNumberField" type="input" selector="//input[@name='number']" timeout="10" />
+        <element name="payByCardExpField" type="input" selector="//input[@name='expiry']" />
+        <element name="payByCardCvcField" type="input" selector="//input[@name='cvc']" />
+        <element name="checkoutAgreementCheckbox" type="input" selector="//*[starts-with(@id, 'agreement_stripe_payments_')]" />
+        <element name="savedCardIframe" type="iframe" selector="//div[@id='stripe-card-cvc-element']//iframe" />
+        <element name="savedCardCvcField" type="input" selector="//input[@name='cvc']" />
+        <element name="placeOrderField" type="button" selector=".payment-method._active button.action.primary.checkout" />
+        <element name="p24PaymentMethodTabId" type="button" selector="#p24-tab" />
+        <element name="stripeAuthorizeButton" type="button" selector=".common-Button.common-Button--default" />
+        <element name="sepaPaymentMethodTabId" type="button" selector="#sepa_debit-tab" />
+        <element name="ibanField" type="input" selector="//input[@name='iban']" />
+        <element name="banContactPaymentMethodTabId" type="button" selector="#bancontact-tab" />
+        <element name="sofortPaymentMethodTabId" type="button" selector="#sofort-tab" />
+        <element name="klarnaPaymentMethodTabId" type="button" selector="#klarna-tab" />
+        <element name="additionalPaymentBox" type="text" selector="div.p-AdditionalPaymentMethods" />
+        <element name="additionalPaymentSelectBox" type="text" selector="select.p-AdditionalPaymentMethods-menu" />
+        <element name="bsbNumberField" type="input" selector="//input[@name='auBsb']" />
+        <element name="accountNumberField" type="input" selector="//input[@name='auBankAccountNumber']" />
+        <element name="blikPaymentMethodTabId" type="button" selector="#blik-tab" />
+
+        <!-- Oxxo modal -->
+        <element name="modalOverlayIframe" type="iframe" selector="(//body//div)[1]//iframe" />
+        <element name="modalContentIframe" type="iframe" selector="//iframe[@class='LightboxApp-content']" />
+        <element name="modalCloseButton" type="button" selector="//button[contains(@class, 'loc_close')]" />
+
+    </section>
+</sections>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="SelectAccordionPaymentMethodActionGroup">
+        <annotations>
+            <description>Selects a payment method from the PaymentElement accordion.</description>
+        </annotations>
+        <arguments>
+            <argument name="accordionButton" type="string"/>
+        </arguments>
+
+        <waitForElementVisible selector="{{StorefrontStripePaymentMethodSection.paymentElementAccordion}}" stepKey="waitForPaymentMethodSelector" time="30"/>
+        <waitForElementVisible selector="{{accordionButton}}" stepKey="waitForPaymentMethodButton" time="10"/>
+        <scrollTo selector="{{accordionButton}}" stepKey="scrollToPaymentMethodButton" y="100"/>
+        <waitForElementClickable selector="{{accordionButton}}" stepKey="waitForPaymentMethodButtonClickable" time="10"/>
+        <wait time="2" stepKey="waitForJavascriptBindings"/>
+        <click selector="{{accordionButton}}" stepKey="clickPaymentMethodButton"/>
+
+        <!-- Wait for the accordion to fully expand and javascript bindings to register -->
+        <wait time="2" stepKey="waitForExpand"/>
+
+    </actionGroup>
+</actionGroups>

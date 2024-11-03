@@ -1,0 +1,33 @@
+{
+    "tax_class": {
+        "column": {
+            "stripe_product_tax_code_name": true,
+            "stripe_product_tax_code": true
+        },
+        "index": {
+            "TAX_CLASS_STRIPE_PRODUCT_TAX_CODE": true
+        }
+    },
+    "quote_address": {
+        "column": {
+            "stripe_tax_calculation_id": true
+        }
+    },
+    "sales_order": {
+        "column": {
+            "stripe_tax_calculation_id": true,
+            "stripe_tax_transactions_reversal_mode": true
+        }
+    },
+    "sales_invoice": {
+        "column": {
+            "stripe_tax_calculation_id": true,
+            "stripe_tax_transaction_id": true
+        }
+    },
+    "sales_creditmemo": {
+        "column": {
+            "stripe_tax_transaction_id": true
+        }
+    }
+}

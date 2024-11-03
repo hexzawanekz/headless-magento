@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="PlaceOrderKlarnaTest" extends="PlaceOrderEmbeddedFlowTest">
+        <annotations>
+            <features value="Order"/>
+            <stories value="Embedded Flow"/>
+            <title value="Guest customer normal order with Stripe Klarna payment method"/>
+            <description value="With Guest Customer ; and a selected store view currency of GBP Currency, add to the cart the products of NormalCart , proceed to the checkout page and specify UK Address as the shipping address and FlatRateShippingMethod as the shipping method. Click Next and specify StripeElementsMethod as the payment method, using Klarna payment method. Finally click Place Order."/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="Normal"/>
+            <group value="cart_normal"/>
+            <group value="card_success"/>
+            <group value="embedded_flow"/>
+            <group value="guest_customer"/>
+            <!-- <group value="stripe"/> -->
+        </annotations>
+
+        <before>
+            <actionGroup ref="ConfigureModuleActionGroup" stepKey="configureModule">
+                <argument name="baseCurrency" value="GBP" />
+                <argument name="defaultCurrency" value="GBP" />
+            </actionGroup>
+            <createData entity="ProductsCategory" stepKey="createCategory"/>
+            <createData entity="StripeSimpleProduct" stepKey="createProduct">
+                <requiredEntity createDataKey="createCategory"/>
+            </createData>
+        </before>
+
+        <actionGroup ref="FillGuestDetailsWithOptionalStateActionGroup" stepKey="checkoutFillingShippingSection" >
+            <argument name="customerVar" value="KlarnaCustomer"/>
+            <argument name="customerAddressVar" value="KlarnaUkAddress"/>
+        </actionGroup>
+
+        <actionGroup ref="SelectAccordionPaymentMethodActionGroup" stepKey="selectPaymentMethod">
+            <argument name="accordionButton" value="{{StorefrontStripePaymentMethodSection.paymentElementAccordionButtonKlarna}}" />
+        </actionGroup>
+
+        <actionGroup ref="KlarnaExternalAuthenticationActionGroup" stepKey="authorizeExternally"/>
+
+        <after>
+            <deleteData createDataKey="createProduct" stepKey="deleteProduct"/>
+            <deleteData createDataKey="createCategory" stepKey="deleteCategory"/>
+        </after>
+    </test>
+</tests>

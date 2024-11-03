@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="ExternalAuthorizationActionGroup">
+        <annotations>
+            <description>Authorizes the payment with the external provider.</description>
+        </annotations>
+
+        <waitForPageLoad stepKey="waitForStripeConfirmationPageToLoad" time="10"/>
+
+        <!-- Verify the stripe payment page loads -->
+        <seeCurrentUrlMatches regex="~\/payment_methods/test_payment~i" stepKey="seeInStripeConfirmationUrl"/>
+        <seeElement selector="{{StorefrontStripePaymentMethodSection.stripeAuthorizeButton}}" stepKey="seeAuthorizeButtonElement"/>
+
+        <!-- Click Payment button on Stripe confirmation page -->
+        <click selector="{{StorefrontStripePaymentMethodSection.stripeAuthorizeButton}}" stepKey="clickAuthorizeButtonElement"/>
+        <waitForPageLoad stepKey="waitForSuccessPageToLoad" time="30"/>
+
+    </actionGroup>
+</actionGroups>

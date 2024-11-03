@@ -1,0 +1,160 @@
+<h4>
+    <span class="stripe-method-title"><?= __('Stripe - %1', $block->escapeHtml($block->getTitle())); //phpcs:ignore ?></span>
+
+    <?php if (!empty($block->getPaymentMethodCode())): ?>
+    <span class="stripe-payment-method">
+        <?php if ($block->getWalletIconUrl()): ?>
+            <img height="24px" style="max-height: 24px; margin-right: 1em" src="<?= $block->getWalletIconUrl(); //phpcs:ignore ?>">
+        <?php endif; ?>
+        <?php if ($block->getPaymentMethodIconUrl()): ?>
+            <img src="<?= $block->getPaymentMethodIconUrl(); //phpcs:ignore ?>" class="stripe-payment-method-icon">
+        <?php endif; ?>
+        <?php if ($block->getPaymentMethodName()): ?>
+            <span class="stripe-payment-method-name"><?= $block->getPaymentMethodName(); //phpcs:ignore ?></span>
+        <?php endif; ?>
+    </span>
+    <?php endif; ?>
+</h4>
+
+<table class="admin__table-secondary order-information-table stripe payment-info">
+  <tbody>
+
+    <?php if (!empty($block->getFormattedAmount())): ?>
+    <tr>
+        <th><?= __('Amount'); //phpcs:ignore ?></th>
+        <td class="stripe-amount">
+            <strong>
+                <?php if ($block->isMultiShipping()): ?>
+                    <?= $block->getFormattedMultishippingAmount(); //phpcs:ignore ?>
+                <?php else: ?>
+                    <?= $block->getFormattedAmount(); //phpcs:ignore ?>
+                <?php endif; ?>
+            </strong>
+        </td>
+    </tr>
+    <?php endif; ?>
+
+    <?php if (!empty($block->getPaymentStatus())): ?>
+    <tr>
+        <th><?= __('Payment status'); //phpcs:ignore ?></th>
+        <td class="stripe-payment-status">
+            <span class="stripe-payment-status-<?= $block->getPaymentStatus(); //phpcs:ignore ?>">
+                <?= $block->getPaymentStatusName(); //phpcs:ignore ?>
+            </span>
+        </td>
+    </tr>
+    <?php endif; ?>
+
+    <?php if ($block->isLegacyPaymentMethod()): ?>
+    <tr>
+        <td class="" colspan="2">
+            <center><?= __("This order has been placed with a deprecated payment method."); //phpcs:ignore ?></center>
+        </td>
+    </tr>
+    <?php endif; ?>
+
+    <?php if (!empty($block->getFormattedSubscriptionAmount())): ?>
+    <tr>
+        <th><?= __('Subscription amount'); //phpcs:ignore ?></th>
+        <td class="stripe-subscription-amount">
+            <?= $block->getFormattedSubscriptionAmount(); //phpcs:ignore ?>
+        </td>
+    </tr>
+    <?php endif; ?>
+
+    <?php if (!empty($block->getPreviousSubscriptionAmount())): ?>
+    <tr>
+        <th><?= __('Previous subscription amount'); //phpcs:ignore ?></th>
+        <td class="stripe-subscription-amount">
+            <?= $block->getPreviousSubscriptionAmount(); //phpcs:ignore ?>
+        </td>
+    </tr>
+    <?php endif; ?>
+
+    <?php if (!empty($block->getFormattedNewSubscriptionAmount())): ?>
+    <tr>
+        <th><?= __('New subscription amount'); //phpcs:ignore ?></th>
+        <td class="stripe-subscription-amount">
+            <?= $block->getFormattedNewSubscriptionAmount(); //phpcs:ignore ?>
+        </td>
+    </tr>
+    <?php endif; ?>
+
+    <?php if (!empty($block->getNewSubscriptionOrderIncrementId())): ?>
+    <tr>
+        <th><?= __('New subscription order'); //phpcs:ignore ?></th>
+        <td class="stripe-subscription-amount">
+            <a href="<?= $block->getSubscriptionOrderUrl($block->getNewSubscriptionOrderIncrementId()); //phpcs:ignore ?>" target="_blank">
+                #<?= $block->getNewSubscriptionOrderIncrementId(); //phpcs:ignore ?>
+            </a>
+        </td>
+    </tr>
+    <?php endif; ?>
+
+    <?php if (!empty($block->getSubscriptionStatus())): ?>
+    <tr>
+        <th><?= __('Subscription status'); //phpcs:ignore ?></th>
+        <td class="stripe-subscription-status">
+            <span class="stripe-subscription-status-<?= $block->getSubscriptionStatus(); //phpcs:ignore ?>">
+                <?= $block->getSubscriptionStatusName(); //phpcs:ignore ?>
+            </span>
+        </td>
+    </tr>
+    <?php endif; ?>
+
+    <?php if (!empty($block->getRiskScore())): ?>
+        <tr>
+            <th><?= __('Risk evaluation'); //phpcs:ignore ?></th>
+            <td class="stripe-payment-risk-<?= $block->getRiskElementClass($block->getRiskScore(), $block->getRiskEvaluation()) //phpcs:ignore ?>">
+            <span class="stripe-payment-risk-score <?= ucfirst($block->getRiskScore()); //phpcs:ignore ?>">
+                <span class="score-value">
+                    <?= ucfirst($block->getRiskScore()); //phpcs:ignore ?>
+                </span>
+            </span>
+                <span class="stripe-payment-risk-level"><?= ucfirst($block->getRiskEvaluation()); //phpcs:ignore ?></span>
+            </td>
+        </tr>
+    <?php endif; ?>
+    <?php if ($block->getPaymentId()): ?>
+    <tr>
+        <th><?= __('Payment'); //phpcs:ignore ?></th>
+        <td class="payment">
+            <a href="https://dashboard.stripe.com/<?= $block->getMode(); //phpcs:ignore ?>payments/<?= $block->getPaymentId(); //phpcs:ignore ?>" target="_blank" rel="noopener noreferrer">View in Stripe</a>
+        </td>
+    </tr>
+    <?php endif; ?>
+    <?php if ($block->getSubscription()): ?>
+    <tr>
+        <th><?= __('Subscription'); //phpcs:ignore ?></th>
+        <td class="subscription">
+            <a href="https://dashboard.stripe.com/<?= $block->getMode(); //phpcs:ignore ?>subscriptions/<?= $block->getSubscription()->id; //phpcs:ignore ?>" target="_blank" rel="noopener noreferrer">View in Stripe</a>
+        </td>
+    </tr>
+    <?php endif; ?>
+    <?php if ($block->getCustomerId()): ?>
+    <tr>
+        <th><?= __('Customer'); //phpcs:ignore ?></th>
+        <td class="customer">
+            <a href="https://dashboard.stripe.com/<?= $block->getMode(); //phpcs:ignore ?>customers/<?= $block->getCustomerId(); //phpcs:ignore ?>" target="_blank" rel="noopener noreferrer">View in Stripe</a>
+        </td>
+    </tr>
+    <?php endif; ?>
+    <?php if ($block->getVoucherLink()): ?>
+    <tr>
+        <th><?= __('Voucher'); //phpcs:ignore ?></th>
+        <td class="customer">
+            <a href="<?= $block->getVoucherLink(); //phpcs:ignore ?>" target="_blank" rel="noopener noreferrer"><?= __("View voucher"); //phpcs:ignore ?></a>
+        </td>
+    </tr>
+    <?php endif; ?>
+    <?php if ($block->getPaymentMethodVerificationUrl()): ?>
+    <tr>
+        <th><?= __('Payment method verification'); //phpcs:ignore ?></th>
+        <td class="customer">
+            <a href="<?= $block->getPaymentMethodVerificationUrl(); //phpcs:ignore ?>" target="_blank" rel="noopener noreferrer"><?= __("Visit hosted verification page"); //phpcs:ignore ?></a>
+        </td>
+    </tr>
+    <?php endif; ?>
+
+    </tbody>
+</table>

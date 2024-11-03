@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suites xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/suiteSchema.xsd">
+    <suite name="StripeSuite">
+        <include>
+            <test name="PlaceOrderMixedCartTest" />
+            <test name="PlaceOrderCardSubscriptionRedirectTest" />
+            <test name="PlaceOrderRedirectFlowTest" />
+            <test name="PlaceOrderCardRedirectTest" />
+            <test name="PlaceOrderCardTrialSubscriptionRedirectTest" />
+            <test name="PlaceOrderMixedCartRedirectTest" />
+            <test name="PlaceOrderEmbeddedFlowTest" />
+            <test name="PlacetOrderWithCreateAccountTest" />
+            <test name="PlaceOrderSepaDebitSubscriptionTest" />
+            <test name="PlaceOrderCardSubscriptionTest" />
+            <test name="PlaceOrderAfterpayTest" />
+            <test name="PlaceOrderAUBECSTest" />
+            <test name="PlaceOrderSavedCardCvcTest" />
+            <test name="PlaceOrderiDEALTest" />
+            <test name="PlaceOrderCardTest" />
+            <test name="PlaceOrderSepaDebitTest" />
+            <test name="PlaceOrderBancontactTest" />
+            <test name="PlaceOrderKlarnaTest" />
+            <test name="PlaceOrderPaypalTest" />
+            <test name="PlaceOrderP24Test" />
+            <test name="PlaceOrderSavedCardTest" />
+            <test name="PlaceOrderSofortTest" />
+            <!-- <test name="PlaceOrderSavedCard3DSTest" /> -->
+            <test name="ReCaptchaInvisibleTest" />
+            <test name="PlaceOrderOxxoTest" />
+            <test name="TermsAndConditionsTest" />
+            <test name="PlaceOrderBacsDebitTest" />
+            <test name="PlaceOrderCardTrialSubscriptionTest" />
+            <test name="AdminCreateOrderWithStripe3DCardTest" />
+            <test name="MultishippingTest" />
+        </include>
+    </suite>
+</suites>

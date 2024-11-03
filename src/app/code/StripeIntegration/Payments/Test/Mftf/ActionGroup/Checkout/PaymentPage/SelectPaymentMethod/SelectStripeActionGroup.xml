@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="SelectStripeActionGroup">
+        <arguments>
+            <argument name="radioButtonSelector" defaultValue="{{StorefrontStripePaymentMethodSection.stripePaymentMethodRadioEmbedded}}" type="string"/>
+        </arguments>
+        <dontSeeJsError stepKey="dontSeeJsError"/>
+        <waitForElementVisible selector="{{radioButtonSelector}}" stepKey="waitForStripePaymentMethodCheckbox" time="20"/>
+        <click selector="{{radioButtonSelector}}" stepKey="selectStripePaymentMethod"/>
+    </actionGroup>
+</actionGroups>

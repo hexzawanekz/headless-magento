@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="NavigateToStripeConfigurationActionGroup">
+        <amOnPage url="{{AdminStripeConfigurationPage.url}}" stepKey="navigateToStoresConfiguration"/>
+        <waitForPageLoad stepKey="waitForStoresConfigurationLoad"/>
+        <waitForElementVisible selector="{{AdminStripeConfigurationSection.configureButton}}" stepKey="waitForConfigureButton"/>
+        <click selector="{{AdminStripeConfigurationSection.configureButton}}" stepKey="clickOnConfigureButton"/>
+        <waitForElement stepKey="waitForGeneralTab" selector="{{AdminStripeConfigurationSection.generalTab}}"/>
+        <click selector="{{AdminStripeConfigurationSection.generalTab}}" stepKey="clickOnGeneralTab"/>
+        <click selector="{{AdminStripeConfigurationSection.paymentsTab}}" stepKey="clickOnPaymentsTab"/>
+    </actionGroup>
+</actionGroups>

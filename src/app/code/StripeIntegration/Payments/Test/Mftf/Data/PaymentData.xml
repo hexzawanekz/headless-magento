@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<entities xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:mftf:DataGenerator/etc/dataProfileSchema.xsd">
+    <entity name="Cards">
+        <data key="successCard">4242424242424242</data>
+        <data key="declinedCard">4000000000000002</data>
+        <data key="insufficientFundsCard">4000000000009995</data>
+        <data key="elevatedRiskCard">4000000000009235</data>
+        <data key="authenticationRequiredCard1">4000000000003220</data>
+        <data key="authenticationRequiredCard2">4000002760003184</data>
+        <data key="installmentsCard">4000004840000008</data>
+        <data key="expDate">1233</data>
+        <data key="cvc">123</data>
+    </entity>
+    <entity name="SEPA">
+        <data key="success">DE89370400440532013000</data>
+        <data key="failed">DE62370400440532013001</data>
+    </entity>
+    <entity name="BECS">
+        <data key="bsbNumber">000000</data>
+        <data key="accountNumber">000123456</data>
+    </entity>
+    <entity name="BACS">
+        <data key="sortCode">108800</data>
+        <data key="accountNumber">00012345</data>
+    </entity>
+    <entity name="Klarna">
+        <data key="successCard">4111111111111111</data>
+    </entity>
+    <entity name="Currency">
+        <data key="allowedCurrencies">USD,EUR,MXN,GBP,AUD,PLN</data>
+    </entity>
+    <entity name="SavedPaymentMethod">
+        <data key="country">US</data>
+        <data key="zipCode">90210</data>
+    </entity>
+</entities>

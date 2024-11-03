@@ -1,0 +1,26 @@
+<p><?= $block->escapeHtml($block->getMethod()->getTitle()) //phpcs:ignore ?></p>
+
+<?php if ($block->getInvoice() && $block->getInvoice()->getId()): ?>
+<table class="admin__table-secondary order-information-table stripe payment-info">
+  <tbody>
+    <tr>
+      <th><?= __('Invoice'); //phpcs:ignore ?></th>
+      <td><a target="_blank" href="<?= $block->getInvoice()->getStripeUrl(); //phpcs:ignore ?>"><?= __("View in Stripe"); //phpcs:ignore ?></a></td>
+    </tr>
+    <tr>
+      <th><?= __('Status'); //phpcs:ignore ?></th>
+      <td><?= $block->getStatus(); //phpcs:ignore ?></td>
+    </tr>
+    <tr>
+      <th><?= __('Payment due'); //phpcs:ignore ?></th>
+      <td><?= $block->getDateDue(); //phpcs:ignore ?></td>
+    </tr>
+    <tr>
+      <th><?= __('Customer'); //phpcs:ignore ?></th>
+      <td><a target="_blank" href="<?= $block->getCustomerUrl(); //phpcs:ignore ?>"><?= __("View in Stripe"); //phpcs:ignore ?></a></td>
+    </tr>
+  </tbody>
+</table>
+<?php else: ?>
+  <p><?= __("The invoice for this order could not be found."); //phpcs:ignore ?></p>
+<?php endif; ?>

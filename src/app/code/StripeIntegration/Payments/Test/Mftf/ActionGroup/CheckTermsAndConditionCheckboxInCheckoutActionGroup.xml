@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="CheckTermsAndConditionCheckboxInCheckoutActionGroup">
+        <arguments>
+            <argument name="termCheckboxText" type="string"/>
+        </arguments>
+        <waitForPageLoad stepKey="waitForSpinnersAndSuch" time="30"/>
+        <waitForElementVisible selector="{{StorefrontStripePaymentMethodSection.checkoutAgreementCheckbox}}" stepKey="waitForCheckoutAgreementElementVisible"/>
+        <see selector="{{StorefrontCheckoutAgreementsSection.checkoutAgreementButton}}" userInput="{{termCheckboxText}}" stepKey="seeTermInCheckout"/>
+        <scrollTo selector="{{StorefrontCheckoutAgreementsSection.checkoutAgreementButton}}" y="300" stepKey="scrollToCheckoutAgreement"/>
+        <wait time="2" stepKey="waitBeforeCheckAgreement"/>
+        <checkOption selector="{{StorefrontStripePaymentMethodSection.checkoutAgreementCheckbox}}" stepKey="checkAgreement"/>
+        <wait time="2" stepKey="waitAfterCheckAgreement"/>
+    </actionGroup>
+</actionGroups>

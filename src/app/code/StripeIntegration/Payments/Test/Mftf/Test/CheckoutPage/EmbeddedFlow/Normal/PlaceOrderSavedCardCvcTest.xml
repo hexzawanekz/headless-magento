@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="PlaceOrderSavedCardCvcTest" extends="PlaceOrderSavedCardTest">
+        <annotations>
+            <features value="Order"/>
+            <stories value="Embedded Flow"/>
+            <title value="General customer normal order with Stripe saved card payment method and cvc"/>
+            <description value="With General Customer ; and a selected store view currency of USDCurrency , save the new payment method, add to the cart the products of NormalCart , proceed to the checkout page and specify NewYorkAddress as the shipping address and FlatRateShippingMethod as the shipping method. Click Next and specify StripeElementsMethod as the payment method, using saved payment method. Finally click Place Order."/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="Normal"/>
+            <group value="cart_normal"/>
+            <group value="payment_method_card"/>
+            <group value="payment_method_saved"/>
+            <group value="payment_method_saved_card"/>
+            <group value="embedded_flow"/>
+            <group value="customer_registered"/>
+            <group value="stripe"/>
+        </annotations>
+
+        <before>
+            <actionGroup ref="ConfigureModuleActionGroup" stepKey="configureModule"></actionGroup>
+            <magentoCLI command="config:set payment/stripe_payments/save_payment_method 1" stepKey="enableSavePaymentMethods"/>
+            <magentoCLI command="config:set payment/stripe_payments/cvc_code {{CvcCode.newAndSavedCard}}" stepKey="saveStripeCvc"/>
+            <createData entity="ProductsCategory" stepKey="createCategory"/>
+            <createData entity="StripeSimpleProduct" stepKey="createProduct">
+                <requiredEntity createDataKey="createCategory"/>
+            </createData>
+            <createData entity="SimpleStripeCustomer" stepKey="createCustomer"/>
+        </before>
+
+        <!-- Store front customer login -->
+        <actionGroup ref="LoginToStorefrontActionGroup" stepKey="storefrontCustomerLogin">
+            <argument name="Customer" value="$$createCustomer$$"/>
+        </actionGroup>
+
+        <!-- Fill the CVC for saved payment method -->
+        <actionGroup ref="FillCardCvcForSavedPaymentMethodActionGroup" stepKey="fillCvcPaymentMethod" after="selectPaymentMethod"/>
+
+        <after>
+            <magentoCLI command="config:set payment/stripe_payments/cvc_code {{CvcCode.newCard}}" stepKey="resetStripeCvc"/>
+            <magentoCLI command="config:set payment/stripe_payments/save_payment_method 0" stepKey="disableSavePaymentMethods"/>
+            <deleteData createDataKey="createProduct" stepKey="deleteProduct"/>
+            <deleteData createDataKey="createCategory" stepKey="deleteCategory"/>
+            <deleteData createDataKey="createCustomer" stepKey="deleteCustomer"/>
+        </after>
+    </test>
+</tests>

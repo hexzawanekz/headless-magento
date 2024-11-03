@@ -1,0 +1,71 @@
+<h4>
+    <span class="stripe-payment-method" style="display: flex; align-items: center;">
+        <?php if ($block->getPaymentMethodIconUrl()): ?>
+            <img src="<?= $block->getPaymentMethodIconUrl(); //phpcs:ignore ?>" class="stripe-payment-method-icon" style="margin-right: 1rem;">
+        <?php endif; ?>
+        <?php if ($block->getPaymentMethodName()): ?>
+            <span class="stripe-payment-method-name"><?= $block->getPaymentMethodName(); //phpcs:ignore ?></span>
+        <?php endif; ?>
+    </span>
+</h4>
+
+<table class="admin__table-secondary order-information-table stripe payment-info">
+  <tbody>
+
+    <tr>
+        <th><?= __('Amount remaining'); //phpcs:ignore ?></th>
+        <td class="stripe-amount">
+            <strong>
+                <?= $block->getFormattedAmountRemaining(); //phpcs:ignore ?>
+            </strong>
+        </td>
+    </tr>
+
+    <?php $details = $block->getIbanDetails(); ?>
+    <?php if ($details): ?>
+    <tr>
+        <th><?= __('IBAN'); //phpcs:ignore ?></th>
+        <td class="iban" style="word-wrap: break-word; overflow-wrap: break-word; max-width: 150px;">
+            <?= $details['iban']; //phpcs:ignore ?>
+        </td>
+    </tr>
+    <tr>
+        <th><?= __('BIC'); //phpcs:ignore ?></th>
+        <td class="bic">
+            <?= $details['bic']; //phpcs:ignore ?>
+        </td>
+    </tr>
+    <tr>
+        <th><?= __('Country'); //phpcs:ignore ?></th>
+        <td class="country">
+            <?= $details['country']; //phpcs:ignore ?>
+        </td>
+    </tr>
+    <tr>
+        <th><?= __('Account holder name'); //phpcs:ignore ?></th>
+        <td class="account-holder-name">
+            <?= $details['account_holder_name']; //phpcs:ignore ?>
+        </td>
+    </tr>
+    <?php endif; ?>
+
+    <?php if ($block->getReference()): ?>
+    <tr>
+        <th><?= __('Reference'); //phpcs:ignore ?></th>
+        <td class="reference">
+            <?= $block->getReference(); //phpcs:ignore ?>
+        </td>
+    </tr>
+    <?php endif; ?>
+
+    <?php if ($block->getHostedInstructionsUrl()): ?>
+    <tr>
+        <th><?= __('Instructions'); //phpcs:ignore ?></th>
+        <td class="instructions">
+            <a href="<?= $block->getHostedInstructionsUrl(); //phpcs:ignore ?>" target="_blank" rel="noopener noreferrer">View instructions</a>
+        </td>
+    </tr>
+    <?php endif; ?>
+
+    </tbody>
+</table>

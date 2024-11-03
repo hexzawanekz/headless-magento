@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="SelectSavedPaymentMethodActionGroup">
+        <annotations>
+            <description>Fills the card number, expiration date and the security code on a Stripe Elements payment form.</description>
+        </annotations>
+        <arguments>
+            <argument name="CardNumber" defaultValue="{{Cards.successCard}}" type="string"/>
+            <argument name="ExpDate" defaultValue="{{Cards.expDate}}" type="string"/>
+            <argument name="CVC" defaultValue="{{Cards.cvc}}" type="string"/>
+        </arguments>
+
+        <!-- Fill the card number -->
+        <switchToIFrame selector="{{StorefrontStripePaymentMethodSection.cardNumberIframe}}" stepKey="switchToCardNumberIframe"/>
+        <waitForElementVisible selector="{{StorefrontStripePaymentMethodSection.cardNumberField}}" stepKey="waitForCardNumberFieldOnIframe" />
+        <wait time="4" stepKey="waitForFieldToInitialize" />
+        <fillField selector="{{StorefrontStripePaymentMethodSection.cardNumberField}}" userInput="{{CardNumber}}" stepKey="fillCardNumber"/>
+        <switchToIFrame stepKey="switchOutOfCardNumberIframe"/>
+
+        <!-- Fill the expiration date -->
+        <switchToIFrame selector="{{StorefrontStripePaymentMethodSection.expDateIframe}}" stepKey="switchToExpDateIframe"/>
+        <waitForElementVisible selector="{{StorefrontStripePaymentMethodSection.expDateField}}" stepKey="waitForExpDateFieldOnIframe" />
+        <fillField selector="{{StorefrontStripePaymentMethodSection.expDateField}}" userInput="{{ExpDate}}" stepKey="fillExpDate"/>
+        <switchToIFrame stepKey="switchOutOfExpDateIframe"/>
+
+        <!-- Fill the CVC number -->
+        <switchToIFrame selector="{{StorefrontStripePaymentMethodSection.cvcIframe}}" stepKey="switchToCVCIframe"/>
+        <waitForElementVisible selector="{{StorefrontStripePaymentMethodSection.cvcField}}" stepKey="waitForCVCOnIframe" />
+        <fillField selector="{{StorefrontStripePaymentMethodSection.cvcField}}" userInput="{{CVC}}" stepKey="fillCVC"/>
+        <switchToIFrame stepKey="switchOutOfCVCIframe"/>
+
+    </actionGroup>
+</actionGroups>

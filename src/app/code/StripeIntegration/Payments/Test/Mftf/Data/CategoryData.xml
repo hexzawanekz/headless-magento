@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entities xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:mftf:Data/etc/dataSchema.xsd">
+    <entity name="ProductsCategory" type="category">
+        <data key="name">Products</data>
+        <data key="is_active">1</data>
+        <data key="include_in_menu">1</data>
+        <data key="description">Products category description</data>
+        <data key="url_key">products</data>
+        <data key="meta_title">Products</data>
+        <data key="meta_keywords">products, items, goods</data>
+        <data key="meta_description">A category for all products</data>
+    </entity>
+</entities>

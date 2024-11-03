@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="PlaceOrderAfterpayTest" extends="PlaceOrderEmbeddedFlowTest">
+        <annotations>
+            <features value="Order"/>
+            <stories value="Embedded Flow"/>
+            <title value="Guest customer normal order with Stripe Afterpay payment method"/>
+            <description value="With Guest Customer ; and a selected store view currency of GBP Currency, add to the cart the products of NormalCart , proceed to the checkout page and specify US Address as the shipping address and FlatRateShippingMethod as the shipping method. Click Next and specify StripeElementsMethod as the payment method, using Afterpay payment method. Finally click Place Order."/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="Normal"/>
+            <group value="cart_normal"/>
+            <group value="card_success"/>
+            <group value="embedded_flow"/>
+            <group value="guest_customer"/>
+            <!-- Currently does not display -->
+            <!-- <group value="stripe"/> -->
+        </annotations>
+
+        <before>
+            <actionGroup ref="ConfigureModuleActionGroup" stepKey="configureModule">
+                <argument name="pk" value="{{_CREDS.stripe/acc_uk_pk}}" />
+                <argument name="sk" value="{{_CREDS.stripe/acc_uk_sk}}" />
+                <argument name="baseCurrency" value="GBP" />
+                <argument name="defaultCurrency" value="GBP" />
+            </actionGroup>
+            <createData entity="ProductsCategory" stepKey="createCategory"/>
+            <createData entity="StripeSimpleProduct" stepKey="createProduct">
+                <requiredEntity createDataKey="createCategory"/>
+            </createData>
+        </before>
+
+        <actionGroup ref="SelectAccordionPaymentMethodActionGroup" stepKey="selectPaymentMethod">
+            <argument name="accordionButton" value="{{StorefrontStripePaymentMethodSection.paymentElementAccordionButtonAfterpay}}" />
+        </actionGroup>
+
+        <after>
+            <deleteData createDataKey="createProduct" stepKey="deleteProduct"/>
+            <deleteData createDataKey="createCategory" stepKey="deleteCategory"/>
+        </after>
+    </test>
+</tests>

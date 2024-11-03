@@ -1,0 +1,79 @@
+<!--@subject A payment was collected, but the order could not be placed @-->
+<!--@vars {
+"var formattedAmount":"Formatted Amount",
+"var paymentLink":"Payment Link",
+"var paymentIntentId":"Payment Intent ID",
+"var formattedShippingAddress|raw":"Formatted shipping address",
+"var formattedBillingAddress|raw":"Formatted billing address",
+"var customerEmail":"Customer email",
+"var orderItems|raw":"List of cart items",
+"var shippingMethod":"Description of shipping method",
+"var extraDetails":"Additional details about the error",
+"var errorMessage":"The error message",
+"var stackTrace":"The stack trace of the error"
+} @-->
+
+{{template config_path="design/email/header_template"}}
+
+<p>A payment of {{var formattedAmount}} was successfully collected in Stripe (<a href="{{var paymentLink}}">{{var paymentIntentId}}</a>),
+    but the order could not be placed in Magento.</p>
+
+    <table>
+        <tr class="email-information">
+            <td>
+                <table class="order-details">
+                    {{depend customerEmail}}
+                    <tr>
+                        <td colspan="2" class="address-details">
+                            <h3>{{trans "Customer Email"}}</h3>
+                            <p>{{var customerEmail}}</p>
+                        </td>
+                    </tr>
+                    {{/depend}}
+                    <tr>
+                        <td class="address-details">
+                            <h3>{{trans "Billing Info"}}</h3>
+                            <p>{{var formattedBillingAddress|raw}}</p>
+                        </td>
+                        {{depend formattedShippingAddress}}
+                        <td class="address-details">
+                            <h3>{{trans "Shipping Info"}}</h3>
+                            <p>{{var formattedShippingAddress|raw}}</p>
+                        </td>
+                        {{/depend}}
+                    </tr>
+                    <tr>
+                        <td class="method-info">
+                            <h3>{{trans "Payment Method"}}</h3>
+                            Stripe
+                        </td>
+                        {{depend shippingMethod}}
+                        <td class="method-info">
+                            <h3>{{trans "Shipping Method"}}</h3>
+                            {{var shippingMethod}}
+                        </td>
+                        {{/depend}}
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="method-info">
+                            <h3>{{trans "Order Items"}}</h3>
+                            {{var orderItems|raw}}
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+
+{{depend extraDetails}}
+    <p>{{var extraDetails}}</p>
+{{/depend}}
+
+{{depend errorMessage}}
+    <p>
+        <pre>{{var errorMessage}}</pre>
+        <pre>{{var stackTrace}}</pre>
+    </p>
+{{/depend}}
+
+{{template config_path="design/email/footer_template"}}

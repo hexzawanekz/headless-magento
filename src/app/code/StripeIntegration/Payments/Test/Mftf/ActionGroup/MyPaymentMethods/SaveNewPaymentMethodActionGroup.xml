@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="SaveNewPaymentMethodActionGroup">
+        <waitForElementVisible selector="{{StorefrontCustomerPaymentMethodsFormSection.addPaymentMethodBtn}}" stepKey="waitForAddPaymentMethodBtn" time="5"/>
+        <click selector="{{StorefrontCustomerPaymentMethodsFormSection.addPaymentMethodBtn}}" stepKey="saveNewPaymentMethod"/>
+        <waitForPageLoad stepKey="waitForPaymentMethodPageLoad" time="10"/>
+        <waitForElementVisible selector="{{StorefrontCustomerPaymentMethodsFormSection.successMessage}}" stepKey="waitForSuccessMessageIsVisible"/>
+        <seeElement selector="{{StorefrontCustomerPaymentMethodsFormSection.successMessage}}" stepKey="seeSuccessMessage"/>
+    </actionGroup>
+</actionGroups>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sections xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:noNamespaceSchemaLocation="urn:magento:mftf:Page/etc/SectionObject.xsd">
+    <section name="StorefrontStripeBacsiFrameSection">
+        <element name="bacsIframe" type="iframe" selector="(//body//div)[1]//iframe" />
+        <element name="confirmButton" type="button" selector="//button[contains(@class,'SubmitButton')]" />
+        <element name="termsConfirmationCheckbox" type="button" selector="//input[@name='termsConfirmation']" />
+        <element name="sortCodeField" type="input" selector="//input[@name='sortCode']" />
+        <element name="accountNumberField" type="input" selector="//input[@name='accountNumber']" />
+    </section>
+</sections>

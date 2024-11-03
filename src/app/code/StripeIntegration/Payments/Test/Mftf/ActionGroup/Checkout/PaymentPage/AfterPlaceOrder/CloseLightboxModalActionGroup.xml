@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="CloseLightboxModalActionGroup">
+        <annotations>
+            <description>Closes the payment method modal.</description>
+        </annotations>
+
+        <!-- Switch to Overlay Iframe -->
+        <waitForElement selector="{{StorefrontStripePaymentMethodSection.modalOverlayIframe}}" time="60" stepKey="waitForOverlayIframe"/>
+        <wait time="2" stepKey="waitForModalRender"/>
+        <switchToIFrame selector="{{StorefrontStripePaymentMethodSection.modalOverlayIframe}}" stepKey="switchToOverlayIframe"/>
+
+        <!-- Switch to Model Iframe -->
+        <waitForElement selector="{{StorefrontStripePaymentMethodSection.modalContentIframe}}" time="30" stepKey="waitForContentIframe"/>
+        <wait time="2" stepKey="waitForContentRender"/>
+        <switchToIFrame selector="{{StorefrontStripePaymentMethodSection.modalContentIframe}}" stepKey="switchToContentIframe"/>
+
+        <!-- Wait for close button and close the iframe -->
+        <waitForElementVisible selector="{{StorefrontStripePaymentMethodSection.modalCloseButton}}" time="30" stepKey="waitForCloseButtonVisible"/>
+        <waitForElementClickable selector="{{StorefrontStripePaymentMethodSection.modalCloseButton}}" time="30" stepKey="waitForCloseButtonClickable"/>
+        <wait time="2" stepKey="waitForJavascriptBindings"/>
+        <click selector="{{StorefrontStripePaymentMethodSection.modalCloseButton}}" stepKey="clickCloseButton"/>
+        <switchToIFrame stepKey="switchOutOverlayIframe"/>
+        <switchToIFrame stepKey="switchOutOxxoContentIframe"/>
+
+    </actionGroup>
+</actionGroups>

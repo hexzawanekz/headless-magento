@@ -1,0 +1,102 @@
+<h4>
+    <span class="stripe-method-title"><?= __('Stripe'); //phpcs:ignore ?></span>
+
+    <span class="stripe-payment-method">
+        <?php if ($block->getPaymentMethodIconUrl()): ?>
+            <img src="<?= $block->getPaymentMethodIconUrl(); //phpcs:ignore ?>" class="stripe-payment-method-icon">
+        <?php endif; ?>
+        <?php if ($block->getPaymentMethodName()): ?>
+            <span class="stripe-payment-method-name"><?= $block->getPaymentMethodName(); //phpcs:ignore ?></span>
+        <?php endif; ?>
+    </span>
+</h4>
+
+<table class="admin__table-secondary order-information-table stripe payment-info">
+  <tbody>
+
+    <tr>
+        <th><?= __('Amount remaining'); //phpcs:ignore ?></th>
+        <td class="stripe-amount">
+            <strong>
+                <?= $block->getFormattedAmountRemaining(); //phpcs:ignore ?>
+            </strong>
+        </td>
+    </tr>
+
+    <?php $amountRefunded = $block->getFormattedAmountRefunded(); ?>
+    <?php if ($amountRefunded): ?>
+    <tr>
+        <th><?= __('Amount refunded'); //phpcs:ignore ?></th>
+        <td class="stripe-amount">
+            <strong>
+                <?= $amountRefunded; //phpcs:ignore ?>
+            </strong>
+        </td>
+    </tr>
+    <?php endif; ?>
+
+    <?php $details = $block->getIbanDetails(); //phpcs:ignore ?>
+    <?php if ($details): ?>
+    <tr>
+        <th><?= __('IBAN'); //phpcs:ignore ?></th>
+        <td class="iban">
+            <?= $details['iban']; //phpcs:ignore ?>
+        </td>
+    </tr>
+    <tr>
+        <th><?= __('BIC'); //phpcs:ignore ?></th>
+        <td class="bic">
+            <?= $details['bic']; //phpcs:ignore ?>
+        </td>
+    </tr>
+    <tr>
+        <th><?= __('Country'); //phpcs:ignore ?></th>
+        <td class="country">
+            <?= $details['country']; //phpcs:ignore ?>
+        </td>
+    </tr>
+    <tr>
+        <th><?= __('Account holder name'); //phpcs:ignore ?></th>
+        <td class="account-holder-name">
+            <?= $details['account_holder_name']; //phpcs:ignore ?>
+        </td>
+    </tr>
+    <?php endif; ?>
+
+    <?php if ($block->getReference()): ?>
+    <tr>
+        <th><?= __('Reference'); //phpcs:ignore ?></th>
+        <td class="reference">
+            <?= $block->getReference(); //phpcs:ignore ?>
+        </td>
+    </tr>
+    <?php endif; ?>
+
+    <?php if ($block->getHostedInstructionsUrl()): ?>
+    <tr>
+        <th><?= __('Instructions'); //phpcs:ignore ?></th>
+        <td class="instructions">
+            <a href="<?= $block->getHostedInstructionsUrl(); //phpcs:ignore ?>" target="_blank" rel="noopener noreferrer">View instructions</a>
+        </td>
+    </tr>
+    <?php endif; ?>
+
+    <?php if ($block->getPaymentId()): ?>
+    <tr>
+        <th><?= __('Payment'); //phpcs:ignore ?></th>
+        <td class="payment">
+            <a href="https://dashboard.stripe.com/<?= $block->getMode(); //phpcs:ignore ?>payments/<?= $block->getPaymentId(); //phpcs:ignore ?>" target="_blank" rel="noopener noreferrer">View in Stripe</a>
+        </td>
+    </tr>
+    <?php endif; ?>
+    <?php if ($block->getCustomerId()): ?>
+    <tr>
+        <th><?= __('Customer'); //phpcs:ignore ?></th>
+        <td class="customer">
+            <a href="https://dashboard.stripe.com/<?= $block->getMode(); //phpcs:ignore ?>customers/<?= $block->getCustomerId(); //phpcs:ignore ?>" target="_blank" rel="noopener noreferrer">View in Stripe</a>
+        </td>
+    </tr>
+    <?php endif; ?>
+
+    </tbody>
+</table>

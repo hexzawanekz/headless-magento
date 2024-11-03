@@ -1,0 +1,11 @@
+<div data-bind="scope: 'stripe_tax_classes'">
+    <!-- ko template: getTemplate() --><!-- /ko -->
+</div>
+
+<script type="text/x-magento-init">
+{
+    "*": {
+        "StripeIntegration_Tax/js/tax_classes": <?= $block->getConfig(); //phpcs:ignore ?>
+    }
+}
+</script>

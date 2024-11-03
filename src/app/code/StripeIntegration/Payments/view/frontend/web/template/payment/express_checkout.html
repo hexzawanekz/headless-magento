@@ -1,0 +1,17 @@
+<div data-bind="visible: isExpressCheckoutElementSupported, afterRender: initECE">
+  <div class="payment-group">
+    <div class="step-title mobile" data-role="title">
+      <!-- ko i18n: 'Express Checkout' --><!-- /ko -->
+    </div>
+    <div class="payment-method stripe-payments mobile">
+      <div id="payment-request-button"></div>
+
+      <div class="checkout-agreements checkout-agreements-block">
+          <!-- ko foreach: getRegion('beforeMethods') -->
+              <!-- ko template: getTemplate() --><!-- /ko -->
+          <!--/ko-->
+      </div>
+
+    </div>
+  </div>
+</div>

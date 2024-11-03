@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:App/etc/menu.xsd">
+    <menu>
+        <add id="StripeIntegration_Tax::stripe_tax_classes" title="Stripe Tax Classes" module="StripeIntegration_Tax" sortOrder="30" parent="Magento_Tax::sales_tax" action="stripe_tax/tax/classes" resource="StripeIntegration_Tax::stripe_tax_classes"/>
+    </menu>
+</config>

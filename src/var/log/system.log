@@ -1,0 +1,25 @@
+[2024-11-02T16:26:28.654507+00:00] main.ERROR: Parameter validation failed
+#0 /var/www/html/vendor/symfony/console/Command/Command.php(292): Magento\Setup\Console\Command\InstallCommand->initialize(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#1 /var/www/html/vendor/symfony/console/Application.php(1078): Symfony\Component\Console\Command\Command->run(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#2 /var/www/html/vendor/symfony/console/Application.php(324): Symfony\Component\Console\Application->doRunCommand(Object(Magento\Setup\Console\Command\InstallCommand), Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#3 /var/www/html/vendor/magento/framework/Console/Cli.php(118): Symfony\Component\Console\Application->doRun(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#4 /var/www/html/vendor/symfony/console/Application.php(175): Magento\Framework\Console\Cli->doRun(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#5 /var/www/html/bin/magento(23): Symfony\Component\Console\Application->run()
+#6 {main} [] []
+[2024-11-02T16:27:57.034410+00:00] main.ERROR: Parameter validation failed
+#0 /var/www/html/vendor/symfony/console/Command/Command.php(292): Magento\Setup\Console\Command\InstallCommand->initialize(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#1 /var/www/html/vendor/symfony/console/Application.php(1078): Symfony\Component\Console\Command\Command->run(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#2 /var/www/html/vendor/symfony/console/Application.php(324): Symfony\Component\Console\Application->doRunCommand(Object(Magento\Setup\Console\Command\InstallCommand), Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#3 /var/www/html/vendor/magento/framework/Console/Cli.php(118): Symfony\Component\Console\Application->doRun(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#4 /var/www/html/vendor/symfony/console/Application.php(175): Magento\Framework\Console\Cli->doRun(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#5 /var/www/html/bin/magento(23): Symfony\Component\Console\Application->run()
+#6 {main} [] []
+[2024-11-02T16:28:33.676040+00:00] main.ERROR: Parameter validation failed
+#0 /var/www/html/vendor/symfony/console/Command/Command.php(292): Magento\Setup\Console\Command\InstallCommand->initialize(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#1 /var/www/html/vendor/symfony/console/Application.php(1078): Symfony\Component\Console\Command\Command->run(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#2 /var/www/html/vendor/symfony/console/Application.php(324): Symfony\Component\Console\Application->doRunCommand(Object(Magento\Setup\Console\Command\InstallCommand), Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#3 /var/www/html/vendor/magento/framework/Console/Cli.php(118): Symfony\Component\Console\Application->doRun(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#4 /var/www/html/vendor/symfony/console/Application.php(175): Magento\Framework\Console\Cli->doRun(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#5 /var/www/html/bin/magento(23): Symfony\Component\Console\Application->run()
+#6 {main} [] []
+[2024-11-02T16:30:00.485654+00:00] main.INFO: Source table payment_services_order_status_data_production_submitted_hash does not exist. Skipping data migration... [] []

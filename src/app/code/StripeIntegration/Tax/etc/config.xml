@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <tax>
+            <stripe_tax>
+                <enabled>0</enabled>
+                <stripe_mode>test</stripe_mode>
+                <shipping_tax_behavior>exclusive</shipping_tax_behavior>
+                <prices_and_promotions_tax_behavior>exclusive</prices_and_promotions_tax_behavior>
+            </stripe_tax>
+        </tax>
+    </default>
+</config>

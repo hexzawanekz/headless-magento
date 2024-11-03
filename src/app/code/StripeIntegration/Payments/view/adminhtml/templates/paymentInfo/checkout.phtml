@@ -1,0 +1,103 @@
+<h4>
+    <span class="stripe-method-title"><?= __('Stripe Checkout - %1', $block->escapeHtml($block->getTitle())); //phpcs:ignore ?></span>
+
+    <?php if (!empty($block->getPaymentMethodCode())): ?>
+    <span class="stripe-payment-method">
+        <?php if ($block->getWalletIconUrl()): ?>
+            <img height="24px" style="max-height: 24px; margin-right: 1em" src="<?= $block->getWalletIconUrl(); //phpcs:ignore ?>">
+        <?php endif; ?>
+        <?php if ($block->getPaymentMethodIconUrl()): ?>
+            <img src="<?= $block->getPaymentMethodIconUrl(); //phpcs:ignore ?>" class="stripe-payment-method-icon">
+        <?php endif; ?>
+        <?php if ($block->getPaymentMethodName()): ?>
+            <span class="stripe-payment-method-name"><?= $block->getPaymentMethodName(); //phpcs:ignore ?></span>
+        <?php endif; ?>
+    </span>
+    <?php endif; ?>
+</h4>
+
+<table class="admin__table-secondary order-information-table stripe payment-info">
+  <tbody>
+
+    <?php if (!empty($block->getFormattedAmount())): ?>
+    <tr>
+        <th><?= __('Amount'); //phpcs:ignore ?></th>
+        <td class="stripe-amount">
+            <strong>
+                <?= $block->getFormattedAmount(); //phpcs:ignore ?>
+            </strong>
+        </td>
+    </tr>
+    <?php endif; ?>
+
+    <?php if (!empty($block->getPaymentStatus())): ?>
+    <tr>
+        <th><?= __('Payment status'); //phpcs:ignore ?></th>
+        <td class="stripe-payment-status">
+            <span class="stripe-payment-status-<?= $block->getPaymentStatus(); //phpcs:ignore ?>">
+                <?= $block->getPaymentStatusName(); //phpcs:ignore ?>
+            </span>
+        </td>
+    </tr>
+    <?php endif; ?>
+
+    <?php if (!empty($block->getFormattedSubscriptionAmount())): ?>
+    <tr>
+        <th><?= __('Subscription amount'); //phpcs:ignore ?></th>
+        <td class="stripe-subscription-amount">
+            <?= $block->getFormattedSubscriptionAmount(); //phpcs:ignore ?>
+        </td>
+    </tr>
+    <?php endif; ?>
+
+    <?php if (!empty($block->getSubscriptionStatus())): ?>
+    <tr>
+        <th><?= __('Subscription status'); //phpcs:ignore ?></th>
+        <td class="stripe-subscription-status">
+            <span class="stripe-subscription-status-<?= $block->getSubscriptionStatus(); //phpcs:ignore ?>">
+                <?= $block->getSubscriptionStatusName(); //phpcs:ignore ?>
+            </span>
+        </td>
+    </tr>
+    <?php endif; ?>
+
+    <?php if (!empty($block->getRiskScore())): ?>
+    <tr>
+        <th><?= __('Risk evaluation'); //phpcs:ignore ?></th>
+        <td class="stripe-payment-risk-<?= $block->getRiskLevelCode(); //phpcs:ignore ?>">
+            <span class="stripe-payment-risk-score <?= ucfirst($block->getRiskScore()); //phpcs:ignore ?>">
+                <span class="score-value">
+                    <?= ucfirst($block->getRiskScore()); //phpcs:ignore ?>
+                </span>
+            </span>
+            <span class="stripe-payment-risk-level"><?= ucfirst($block->getRiskEvaluation()); //phpcs:ignore ?></span>
+        </td>
+    </tr>
+    <?php endif; ?>
+    <?php if ($block->getPaymentId()): ?>
+    <tr>
+        <th><?= __('Payment'); //phpcs:ignore ?></th>
+        <td class="payment">
+            <a href="https://dashboard.stripe.com/<?= $block->getMode(); //phpcs:ignore ?>payments/<?= $block->getPaymentId(); //phpcs:ignore ?>" target="_blank" rel="noopener noreferrer">View in Stripe</a>
+        </td>
+    </tr>
+    <?php endif; ?>
+    <?php if ($block->getSubscription()): ?>
+    <tr>
+        <th><?= __('Subscription'); //phpcs:ignore ?></th>
+        <td class="subscription">
+            <a href="https://dashboard.stripe.com/<?= $block->getMode(); //phpcs:ignore ?>subscriptions/<?= $block->getSubscription()->id; //phpcs:ignore ?>" target="_blank" rel="noopener noreferrer">View in Stripe</a>
+        </td>
+    </tr>
+    <?php endif; ?>
+    <?php if ($block->getCustomerId()): ?>
+    <tr>
+        <th><?= __('Customer'); //phpcs:ignore ?></th>
+        <td class="customer">
+            <a href="https://dashboard.stripe.com/<?= $block->getMode(); //phpcs:ignore ?>customers/<?= $block->getCustomerId(); //phpcs:ignore ?>" target="_blank" rel="noopener noreferrer">View in Stripe</a>
+        </td>
+    </tr>
+    <?php endif; ?>
+
+    </tbody>
+</table>

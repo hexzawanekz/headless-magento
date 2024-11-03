@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="PlaceOrderRedirectFlowTest">
+        <annotations>
+            <features value="Order"/>
+            <stories value="Redirect Flow"/>
+            <title value="Stripe Checkout"/>
+            <description value="Redirect flow tests."/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="Normal"/>
+        </annotations>
+
+        <before>
+            <actionGroup ref="ConfigureModuleActionGroup" stepKey="configureModule"></actionGroup>
+            <magentoCLI command="config:set payment/stripe_payments/payment_flow {{PaymentFlow.redirect}}" stepKey="setPaymentFlow"/>
+        </before>
+
+        <actionGroup ref="NormalCartActionGroup" stepKey="createCart" />
+
+        <!-- Go to checkout -->
+        <actionGroup ref="GoToCheckoutFromMinicartActionGroup" stepKey="goToCheckoutFromMinicart"/>
+
+        <!-- Fill Shipment form -->
+        <actionGroup ref="FillGuestCustomerShippingDetailsActionGroup" stepKey="checkoutFillingShippingSection" >
+            <argument name="customerVar" value="Simple_US_Customer"/>
+            <argument name="customerAddressVar" value="US_Address_TX"/>
+        </actionGroup>
+
+        <!-- Wait for payment page -->
+        <waitForPageLoad stepKey="waitForPaymentPageToLoad"/>
+
+        <dontSeeJsError stepKey="dontSeeJsError"/>
+        <waitForElementVisible selector="{{StorefrontStripePaymentMethodSection.stripePaymentMethodRadioRedirect}}" stepKey="waitForStripePaymentMethodCheckbox" time="20"/>
+        <click selector="{{StorefrontStripePaymentMethodSection.stripePaymentMethodRadioRedirect}}" stepKey="selectStripePaymentMethod"/>
+
+        <waitForElement selector="{{CheckoutPaymentSection.placeOrder}}" time="30" stepKey="waitForPlaceOrderButton"/>
+        <click selector="{{CheckoutPaymentSection.placeOrder}}" stepKey="clickPlaceOrder"/>
+
+        <waitForElement selector="{{StorefrontStripeCheckoutSection.cardNumberField}}" stepKey="waitForStripeCheckoutRedirect"/>
+        <seeCurrentUrlMatches regex="~https://checkout.stripe.com/~" stepKey="seeCurrentUrlMatches"/>
+
+        <!-- Fill payment form -->
+        <actionGroup ref="FillStripeCheckoutCardDetailsWithoutEmailActionGroup" stepKey="fillCardDetails" />
+
+        <!-- Click pay and wait for success -->
+        <actionGroup ref="ClickPayActionGroup" stepKey="clickPay"/>
+
+        <waitForPageLoad stepKey="waitForSuccessPageToLoad" time="30"/>
+
+        <!-- Check if success message is displayed -->
+        <waitForElement selector="{{CheckoutSuccessMainSection.successTitle}}" stepKey="waitForSuccessMessage"/>
+        <see selector="{{CheckoutSuccessMainSection.successTitle}}" userInput="Thank you for your purchase!" stepKey="seeOrderSuccessMessage"/>
+
+        <after>
+            <magentoCLI command="config:set payment/stripe_payments/payment_flow {{PaymentFlow.embed}}" stepKey="unsetPaymentFlow"/>
+        </after>
+    </test>
+</tests>

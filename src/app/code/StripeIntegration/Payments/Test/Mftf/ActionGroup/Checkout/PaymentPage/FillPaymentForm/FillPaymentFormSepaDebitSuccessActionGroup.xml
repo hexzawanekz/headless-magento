@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="FillPaymentFormSepaDebitSuccessActionGroup">
+
+        <!-- Fill the IBAN number -->
+        <waitForElementVisible selector="{{StorefrontStripePaymentMethodSection.ibanField}}" stepKey="waitForIbanField" time="30" />
+        <fillField selector="{{StorefrontStripePaymentMethodSection.ibanField}}" userInput="{{SEPA.success}}" stepKey="fillIbanNumber" />
+
+    </actionGroup>
+</actionGroups>

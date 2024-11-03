@@ -1,0 +1,71 @@
+<span class="stripe-method-title"><?= __('Subscription update'); //phpcs:ignore ?></span>
+
+<table class="admin__table-secondary order-information-table stripe payment-info">
+  <tbody>
+
+    <?php if ($block->getOriginalSubscriptionOrderIncrementId()): ?>
+    <tr>
+        <td><?= __('Previous subscription order'); //phpcs:ignore ?></td>
+        <td class="stripe-original-order">
+            <a href="<?= $block->getSubscriptionOrderUrl($block->getOriginalSubscriptionOrderIncrementId()); //phpcs:ignore ?>" target="_blank">
+                #<?= $block->getOriginalSubscriptionOrderIncrementId(); //phpcs:ignore ?>
+            </a>
+        </td>
+    </tr>
+    <?php endif; ?>
+
+    <?php if (!empty($block->getFormattedAmount())): ?>
+    <tr>
+        <td><?= __('Amount'); //phpcs:ignore ?></td>
+        <td class="stripe-amount">
+            <strong>
+                <?php if ($block->isMultiShipping()): ?>
+                    <?= $block->getFormattedMultishippingAmount(); //phpcs:ignore ?>
+                <?php else: ?>
+                    <?= $block->getFormattedAmount(); //phpcs:ignore ?>
+                <?php endif; ?>
+            </strong>
+        </td>
+    </tr>
+    <?php endif; ?>
+
+    <?php if (!empty($block->getFormattedSubscriptionAmount())): ?>
+    <tr>
+        <td><?= __('Subscription amount'); //phpcs:ignore ?></td>
+        <td class="stripe-subscription-amount">
+            <?= $block->getFormattedSubscriptionAmount(); //phpcs:ignore ?>
+        </td>
+    </tr>
+    <?php endif; ?>
+
+    <?php if (!empty($block->getPreviousSubscriptionAmount())): ?>
+    <tr>
+        <td><?= __('Previous subscription amount'); //phpcs:ignore ?></td>
+        <td class="stripe-subscription-amount">
+            <?= $block->getPreviousSubscriptionAmount(); //phpcs:ignore ?>
+        </td>
+    </tr>
+    <?php endif; ?>
+
+    <?php if (!empty($block->getFormattedNewSubscriptionAmount())): ?>
+    <tr>
+        <td><?= __('New subscription amount'); //phpcs:ignore ?></td>
+        <td class="stripe-subscription-amount">
+            <?= $block->getFormattedNewSubscriptionAmount(); //phpcs:ignore ?>
+        </td>
+    </tr>
+    <?php endif; ?>
+
+    <?php if (!empty($block->getNewSubscriptionOrderIncrementId())): ?>
+    <tr>
+        <td><?= __('New subscription order'); //phpcs:ignore ?></td>
+        <td class="stripe-subscription-amount">
+            <a href="<?= $block->getSubscriptionOrderUrl($block->getNewSubscriptionOrderIncrementId()); //phpcs:ignore ?>" target="_blank">
+                #<?= $block->getNewSubscriptionOrderIncrementId(); //phpcs:ignore ?>
+            </a>
+        </td>
+    </tr>
+    <?php endif; ?>
+
+    </tbody>
+</table>

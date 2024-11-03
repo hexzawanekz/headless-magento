@@ -1,0 +1,13 @@
+{
+  "dependencies": {
+    "@vue-storefront/magento-api": "^5.0.0",
+    "@vue-storefront/magento-sdk": "^3.0.1",
+    "@vue-storefront/middleware": "^4.1.0",
+    "@vue-storefront/sdk": "^3.2.3",
+    "vue-template-compiler": "^0.1.0"
+  },
+  "type": "module",
+  "scripts": {
+    "start": "node middleware.js"
+  }
+}

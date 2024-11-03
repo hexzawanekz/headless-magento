@@ -1,0 +1,17 @@
+<?php
+/** @var \StripeIntegration\Tax\Block\Adminhtml\System\Config\Form\Field\PreviewNotice $block */
+?>
+<tr id="row_<?= $block->getElement()->getHtmlId(); ?>" class="message-system-short-wrapper ">
+  <td colspan="2" class="value stripe_preview_notice ">
+    <div class="messages">
+      <div class="message message-info info">
+        <div>
+          <span>Stripe Tax is in public preview. Functionality is subject to change. Please send any feedback to</span>
+          <a href="mailto:adobe-commerce-stripe-tax-rc@stripe.com">adobe-commerce-stripe-tax-rc@stripe.com</a>.
+          For more info about the prices of our tax calculation API, please visit
+          <a href="https://support.stripe.com/questions/understanding-stripe-tax-pricing" target="_blank">https://support.stripe.com/questions/understanding-stripe-tax-pricing</a>.
+        </div>
+      </div>
+    </div>
+  </td>
+</tr>

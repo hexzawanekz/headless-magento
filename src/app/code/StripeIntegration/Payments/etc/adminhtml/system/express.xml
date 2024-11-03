@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<include xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_include.xsd">
+  <group id="express" translate="label" type="text" sortOrder="11" showInDefault="1" showInWebsite="1" showInStore="1">
+    <label>Express Checkout</label>
+    <fieldset_css>express-checkout</fieldset_css>
+    <comment>Allow customers to place orders using device-supported payment buttons such as Apple Pay, Google Pay, Link etc.</comment>
+    <field id="global_enabled" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+      <label>Enabled</label>
+      <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+      <config_path>payment/stripe_payments_express/global_enabled</config_path>
+    </field>
+    <field id="locations" translate="label" type="multiselect" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
+      <label>Locations</label>
+      <source_model>StripeIntegration\Payments\Model\Adminhtml\Source\WalletButton</source_model>
+      <config_path>payment/stripe_payments_express/enabled</config_path>
+      <depends>
+        <field id="global_enabled">1</field>
+      </depends>
+    </field>
+    <field id="seller_name" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+      <label>Seller name</label>
+      <comment>
+        <![CDATA[This is the text that appears as PAY SELLER NAME in the payment modal.]]>
+      </comment>
+      <config_path>payment/stripe_payments_express/seller_name</config_path>
+      <depends>
+        <field id="global_enabled">1</field>
+      </depends>
+    </field>
+    <field id="button_height" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+      <label>Button height</label>
+      <config_path>payment/stripe_payments_express/button_height</config_path>
+      <frontend_class>validate-number</frontend_class>
+      <comment>
+        <![CDATA[You can override this to specify a custom button height in the range of 40px-55px.]]>
+      </comment>
+      <depends>
+        <field id="global_enabled">1</field>
+      </depends>
+    </field>
+    <field id="sort_order" translate="label" type="select" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+      <label>Sort order</label>
+      <source_model>StripeIntegration\Payments\Model\Adminhtml\Source\Express\SortOrder</source_model>
+      <config_path>payment/stripe_payments_express/sort_order</config_path>
+      <depends>
+        <field id="global_enabled">1</field>
+      </depends>
+    </field>
+    <include path="StripeIntegration_Payments::system/express/apple_pay.xml" />
+    <include path="StripeIntegration_Payments::system/express/google_pay.xml" />
+    <include path="StripeIntegration_Payments::system/express/link.xml" />
+    <!-- PayPal and Amazon Pay do not currently support deferred intents. Will enable once they are generally available. -->
+    <!-- <include path="StripeIntegration_Payments::system/express/paypal.xml" /> -->
+ </group>
+</include>

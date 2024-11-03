@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="WaitForPaymentElementActionGroup">
+        <waitForElementVisible selector="{{StorefrontStripePaymentMethodSection.paymentElementIframe}}" stepKey="waitForPaymentElementIframe" time="60"/>
+        <dontSeeJsError stepKey="dontSeeJsError"/>
+    </actionGroup>
+</actionGroups>

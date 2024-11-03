@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sections xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:noNamespaceSchemaLocation="urn:magento:mftf:Page/etc/SectionObject.xsd">
+    <section name="AdminStripeConfigurationSection">
+        <element name="configureButton" type="button" selector="//div[contains(@class,'stripe-admin-config')]//button" />
+        <element name="generalTab" type="button" selector="//a[@id='payment_us_stripe_payments_basic-head']" />
+        <element name="paymentsTab" type="button" selector="//a[@id='payment_us_stripe_payments_payments-head']" />
+    </section>
+</sections>

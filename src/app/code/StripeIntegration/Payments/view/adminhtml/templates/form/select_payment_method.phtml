@@ -1,0 +1,49 @@
+<?php
+    $methods = $block->getSavedPaymentMethods();
+?>
+
+<div class="stripe-saved-payment-methods">
+    <?php if (empty($methods)): ?>
+        <input type="hidden" id="new_card" value="" name="payment[payment_method]" />
+    <?php else: ?>
+        <?php foreach ($methods as $method): ?>
+            <div class="saved-payment-method-option">
+                <input type="radio" id="<?= $method['id']; //phpcs:ignore ?>" value="<?= $method['id']; //phpcs:ignore ?>" name="payment[payment_method]" />
+                <label for="<?= $method['id']; //phpcs:ignore ?>">
+                    <span class="payment-method-name">
+                        <?php
+                            if (isset($method['brand']))
+                                echo ucwords($method['brand']) . "&nbsp;&nbsp;"; //phpcs:ignore
+
+                            echo $method['label']; //phpcs:ignore
+                        ?>
+                    </span>
+                    <img src="<?= $method['icon']; //phpcs:ignore ?>" class="payment-method-icon" />
+                </label>
+            </div>
+        <?php endforeach; ?>
+
+        <div class="saved-payment-method-option">
+            <input type="radio" id="new_card" value="" name="payment[payment_method]" data-validate="{'validate-no-empty': true}" />
+            <label for="new_card">
+                <span class="payment-method-name"><?= __("Use a new card"); //phpcs:ignore ?></span>
+            </label>
+        </div>
+    <?php endif; ?>
+
+    <div id="new_card_container" style="display: none;">
+        <div id="stripe-card-element"></div>
+        <input id="save_payment_method" type="checkbox" name="payment[save_payment_method]" class="admin__control-checkbox" />
+        <label class="save-payment-method admin__field-label" for="save_payment_method">
+            <span><?= __("Save card on customer"); //phpcs:ignore ?></span>
+        </label>
+        <a class=" action-add" target="_blank" href="<?= $block->getAddNewPaymentMethodURL(); //phpcs:ignore ?>">
+            <?= __("Manage customer"); //phpcs:ignore ?>
+        </a>
+    </div>
+
+    <label for="payment[payment_method]" class="stripe mage-error" id="payment[payment_method]-error" style="display: none;">
+        <?= __("Please select a payment method."); //phpcs:ignore ?>
+    </label>
+
+</div>

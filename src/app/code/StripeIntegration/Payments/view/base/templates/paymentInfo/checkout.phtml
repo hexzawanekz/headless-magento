@@ -1,0 +1,10 @@
+<?php if (!empty($block->getPaymentMethodCode())): ?>
+<div style="line-height: 40px">
+    <?php if ($block->getPaymentMethodIconUrl()): ?>
+        <img height="24px" style="max-height: 24px" src="<?= $block->getPaymentMethodIconUrl("png"); //phpcs:ignore ?>">
+    <?php endif; ?>
+    <?php if ($block->getPaymentMethodName()): ?>
+        <span style="display: inline-block; position: relative; top: -7px; left: 5px;"><?= $block->getPaymentMethodName(true); //phpcs:ignore ?></span>
+    <?php endif; ?>
+</div>
+<?php endif; ?>

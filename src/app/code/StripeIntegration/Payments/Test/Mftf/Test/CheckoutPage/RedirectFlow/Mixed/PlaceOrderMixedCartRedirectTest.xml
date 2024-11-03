@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="PlaceOrderMixedCartRedirectTest" extends="PlaceOrderRedirectFlowTest">
+        <annotations>
+            <features value="Order"/>
+            <stories value="Redirect Flow"/>
+            <title value="Guest customer can buy regular products with subscription products, with a 3D Secure card, using Stripe Checkout."/>
+            <description value="With GuestCustomer ; and a selected store view currency of EURCurrency ; add to the cart the products of MixedCart ; proceed to the checkout page and if a shipping address is required, specify NewYorkAddress as the shipping address, FlatRateShippingMethod as the shipping method, click Next and specify StripeCheckoutMethod as the payment method, filling authenticationRequiredCard in the payment form and finally; click Place Order."/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="Mixed"/>
+            <group value="guest_customer"/>
+            <group value="mixed_cart"/>
+            <group value="card_success"/>
+            <group value="redirect_flow"/>
+            <group value="stripe"/>
+        </annotations>
+
+        <before>
+            <createData entity="ProductsCategory" stepKey="createCategory"/>
+            <createData entity="StripeSimpleProduct" stepKey="createProduct">
+                <requiredEntity createDataKey="createCategory"/>
+            </createData>
+            <createData entity="SimpleMonthlySubscriptionProduct" stepKey="createSubscription">
+                <requiredEntity createDataKey="createCategory"/>
+            </createData>
+            <magentoCLI command="stripe:mftf:configure-subscription-product $$createProduct.id$$ SimpleMonthlySubscription" stepKey="configureSubscriptionProduct"/>
+        </before>
+
+        <actionGroup ref="SubscriptionCartActionGroup" after="createCart" stepKey="addSubscriptionToCart" />
+
+        <actionGroup ref="SkipActionGroup" stepKey="waitForStripePaymentMethodCheckbox" />
+        <actionGroup ref="SkipActionGroup" stepKey="selectStripePaymentMethod" />
+
+        <after>
+            <deleteData createDataKey="createProduct" stepKey="deleteProduct"/>
+            <deleteData createDataKey="createSubscription" stepKey="deleteSubscription"/>
+            <deleteData createDataKey="createCategory" stepKey="deleteCategory"/>
+        </after>
+    </test>
+</tests>

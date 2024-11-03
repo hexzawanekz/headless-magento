@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="tax_class" resource="default" engine="innodb" comment="Tax Class">
+        <column xsi:type="varchar" name="stripe_product_tax_code_name" nullable="true" length="255" comment="Stripe Product Tax Code Name"/>
+        <column xsi:type="varchar" name="stripe_product_tax_code" nullable="true" length="15" comment="Stripe Product Tax Code"/>
+
+        <index referenceId="TAX_CLASS_STRIPE_PRODUCT_TAX_CODE" indexType="btree">
+            <column name="stripe_product_tax_code"/>
+        </index>
+    </table>
+
+    <table name="quote_address" resource="default" engine="innodb">
+        <column xsi:type="varchar" name="stripe_tax_calculation_id" nullable="true" length="255" comment="Stripe Tax Calculation ID"/>
+    </table>
+
+    <table name="sales_order" resource="sales" engine="innodb">
+        <column xsi:type="varchar" name="stripe_tax_calculation_id" nullable="true" length="255" comment="Stripe Tax Calculation ID"/>
+        <column xsi:type="text" name="stripe_tax_transactions_reversal_mode" nullable="true" comment="Stripe Tax Transaction Reversal Mode"/>
+    </table>
+
+    <table name="sales_invoice" resource="sales" engine="innodb">
+        <column xsi:type="varchar" name="stripe_tax_calculation_id" nullable="true" length="255" comment="Stripe Tax Calculation ID"/>
+        <column xsi:type="varchar" name="stripe_tax_transaction_id" nullable="true" length="255" comment="Stripe Tax Transaction ID"/>
+    </table>
+
+    <table name="sales_creditmemo" resource="sales" engine="innodb">
+        <column xsi:type="varchar" name="stripe_tax_transaction_id" nullable="true" length="500" comment="Stripe Tax Transaction ID"/>
+    </table>
+</schema>

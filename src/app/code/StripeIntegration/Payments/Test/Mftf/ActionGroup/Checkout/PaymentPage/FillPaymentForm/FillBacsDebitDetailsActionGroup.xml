@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="FillBacsDebitDetailsActionGroup">
+        <annotations>
+            <description>Fill BACS Direct Debit form.</description>
+        </annotations>
+        <arguments>
+            <argument name="sortCode" defaultValue="{{BACS.sortCode}}" type="string"/>
+            <argument name="accountNumber" defaultValue="{{BACS.accountNumber}}" type="string"/>
+        </arguments>
+
+        <fillField selector="{{StorefrontStripeBacsiFrameSection.sortCodeField}}" userInput="{{sortCode}}" stepKey="fillSortCode"/>
+        <fillField selector="{{StorefrontStripeBacsiFrameSection.accountNumberField}}" userInput="{{accountNumber}}" stepKey="fillAccountNumber"/>
+        <click selector="{{StorefrontStripeBacsiFrameSection.termsConfirmationCheckbox}}" stepKey="checkTermsConfirmationCheckbox"/>
+
+    </actionGroup>
+</actionGroups>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="FillAUBECSDebitDetailsActionGroup">
+        <annotations>
+            <description>Fill the BECS Direct Debit payment form.</description>
+        </annotations>
+        <arguments>
+            <argument name="bsbNumber" defaultValue="{{BECS.bsbNumber}}" type="string"/>
+            <argument name="accountNumber" defaultValue="{{BECS.accountNumber}}" type="string"/>
+        </arguments>
+
+        <fillField selector="{{StorefrontStripePaymentMethodSection.bsbNumberField}}" userInput="{{bsbNumber}}" stepKey="fillBsbNumber"/>
+        <fillField selector="{{StorefrontStripePaymentMethodSection.accountNumberField}}" userInput="{{accountNumber}}" stepKey="fillAccountNumber"/>
+
+    </actionGroup>
+</actionGroups>

@@ -1,0 +1,138 @@
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="tax">
+            <group id="stripe_tax" translate="label" type="text" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Stripe Tax</label>
+                <field id="stripe_preview_notice" translate="label" type="text" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label> </label>
+                    <frontend_model>StripeIntegration\Tax\Block\Adminhtml\System\Config\Form\Field\PreviewNotice</frontend_model>
+                </field>
+                <field id="enabled" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="stripe_mode" translate="label" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Mode</label>
+                    <comment><![CDATA[Set this to Live when you are ready to calculate real taxes]]></comment>
+                    <source_model>StripeIntegration\Tax\Model\Adminhtml\Source\Mode</source_model>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>
+
+                <field id="stripe_test_pk" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Test publishable API key</label>
+                    <comment>
+                        <![CDATA[<a target="_blank" rel="noopener noreferrer" href="https://dashboard.stripe.com/account/apikeys">Your Stripe Account</a> &gt; API Keys &gt; Test Publishable Key]]>
+                    </comment>
+                    <depends>
+                        <field id="enabled">1</field>
+                        <field id="stripe_mode">test</field>
+                    </depends>
+                </field>
+                <field id="stripe_test_sk" translate="label" type="obscure" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Test secret API key</label>
+                    <comment>
+                        <![CDATA[<a target="_blank" rel="noopener noreferrer" href="https://dashboard.stripe.com/account/apikeys">Your Stripe Account</a> &gt; API Keys &gt; Test Secret Key]]>
+                    </comment>
+                    <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
+                    <depends>
+                        <field id="enabled">1</field>
+                        <field id="stripe_mode">test</field>
+                    </depends>
+                </field>
+
+                <field id="stripe_live_pk" translate="label" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Live publishable API key</label>
+                    <comment>
+                        <![CDATA[<a target="_blank" rel="noopener noreferrer" href="https://dashboard.stripe.com/account/apikeys">Your Stripe Account</a> &gt; API Keys &gt; Live Publishable Key]]>
+                    </comment>
+                    <depends>
+                        <field id="enabled">1</field>
+                        <field id="stripe_mode">live</field>
+                    </depends>
+                </field>
+                <field id="stripe_live_sk" translate="label" type="obscure" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Live secret API key</label>
+                    <comment>
+                        <![CDATA[<a target="_blank" rel="noopener noreferrer" href="https://dashboard.stripe.com/account/apikeys">Your Stripe Account</a> &gt; API Keys &gt; Live Secret Key]]>
+                    </comment>
+                    <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
+                    <depends>
+                        <field id="enabled">1</field>
+                        <field id="stripe_mode">live</field>
+                    </depends>
+                </field>
+                <field id="prices_and_promotions_tax_behavior" translate="label" type="select" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Product prices and promotions are</label>
+                    <source_model>StripeIntegration\Tax\Model\Adminhtml\Source\PricesAndPromotionsTaxBehavior</source_model>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>
+                <field id="shipping_tax_behavior" translate="label" type="select" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Shipping is</label>
+                    <source_model>StripeIntegration\Tax\Model\Adminhtml\Source\ShippingTaxBehavior</source_model>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>
+                <field id="default_product_tax_class" translate="label" type="select" sortOrder="90" showInDefault="1">
+                    <label>Default tax class for products</label>
+                    <source_model>Magento\Tax\Model\TaxClass\Source\Product</source_model>
+                    <backend_model>Magento\Tax\Model\Config\TaxClass</backend_model>
+                    <config_path>tax/classes/default_product_tax_class</config_path>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                    <comment>
+                        <![CDATA[Configure tax classes from Stores &rarr; Taxes &rarr; Stripe Tax Classes]]>
+                    </comment>
+                </field>
+                <field id="wrapping_tax_class" translate="label" type="select" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Tax class for gift options</label>
+                    <source_model>Magento\Tax\Model\TaxClass\Source\Product</source_model>
+                    <config_path>tax/classes/wrapping_tax_class</config_path>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                    <comment>
+                        <![CDATA[Only applies to Adobe Commerce]]>
+                    </comment>
+                </field>
+                <field id="active_tax_registrations" translate="label" type="text" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Active tax registrations</label>
+                    <frontend_model>StripeIntegration\Tax\Block\Adminhtml\System\Config\Form\Field\ActiveTaxRegistrations</frontend_model>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>
+            </group>
+            <group id="calculation">
+                <depends>
+                    <field id="*/stripe_tax/enabled">0</field>
+                </depends>
+            </group>
+            <group id="classes">
+                <depends>
+                    <field id="*/stripe_tax/enabled">0</field>
+                </depends>
+            </group>
+            <group id="defaults">
+                <depends>
+                    <field id="*/stripe_tax/enabled">0</field>
+                </depends>
+            </group>
+            <group id="display">
+                <depends>
+                    <field id="*/stripe_tax/enabled">0</field>
+                </depends>
+            </group>
+            <group id="weee">
+                <depends>
+                    <field id="*/stripe_tax/enabled">0</field>
+                </depends>
+            </group>
+        </section>
+    </system>
+</config>

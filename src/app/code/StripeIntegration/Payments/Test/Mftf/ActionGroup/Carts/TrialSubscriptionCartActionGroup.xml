@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="TrialSubscriptionCartActionGroup">
+        <annotations>
+            <description>Create a cart which includes a simple trial subscription.</description>
+        </annotations>
+
+        <amOnPage url="{{StorefrontProductPage.url(SimpleTrialMonthlySubscriptionProduct.urlKey)}}" stepKey="goToSimpleTrialMonthlySubscriptionProductPage"/>
+
+        <waitForPageLoad stepKey="waitForPageToLoad" time="30"/>
+        <waitForElementVisible selector="{{StorefrontProductInfoMainSection.AddToCart}}" stepKey="waitForAddToCartButtonVisible" time="30"/>
+        <dontSeeJsError stepKey="dontSeeJsError"/>
+        <helper class="\StripeIntegration\Payments\Test\Mftf\Helper\StripeHelper" method="waitForAddToCart" stepKey="waitForAddToCartButtonClickable">
+            <argument name="cssSelector">{{StorefrontProductInfoMainSection.AddToCart}}</argument>
+        </helper>
+        <wait time="2" stepKey="waitForJavascriptBindings" />
+        <click selector="{{StorefrontProductInfoMainSection.AddToCart}}" stepKey="clickAddToCartStripeSimpleProduct"/>
+
+    </actionGroup>
+</actionGroups>

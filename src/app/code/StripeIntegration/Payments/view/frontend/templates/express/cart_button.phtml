@@ -1,0 +1,30 @@
+<?php if ($block->isEnabled("shopping_cart_page")) : ?>
+    <div id="payment-request-button-cart" class="payment-request-button cart"></div>
+    <script>
+        require(['domReady!', 'StripeIntegration_Payments/js/stripe_payments_express', 'Magento_Customer/js/customer-data'], function(domReady, stripeExpress, customerData)
+        {
+            var cart = customerData.get('cart');
+
+            var initECE = function()
+            {
+                var locationDetails = {
+                    location: 'cart',
+                };
+                stripeExpress.initStripeExpress(
+                    '#payment-request-button-cart',
+                    <?= $block->initParams->getWalletParams(); // phpcs:ignore ?>,
+                    locationDetails,
+                    <?= $block->getButtonConfig(); //phpcs:ignore ?>,
+                    stripeExpress.initCartWidget.bind(stripeExpress)
+                );
+            };
+            initECE();
+
+            cart.subscribe(function ()
+            {
+                // Wait for Magento to commit the changes before re-initializing the ECE
+                setTimeout(initECE, 500);
+            });
+        });
+    </script>
+<?php endif; ?>

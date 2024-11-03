@@ -1,0 +1,54 @@
+input PaymentMethodInput {
+    stripe_payments: StripePaymentsInput @doc(description:"Required input for Stripe Payments")
+}
+
+input StripePaymentsInput {
+    payment_method: String @doc(description: "Pass the payment method token here (starts with pm_)")
+    save_payment_method: Boolean @doc(description: "Specify whether the payment method should be saved")
+    cvc_token: String @doc(description:"When CVC is enabled for saved cards, pass the CVC token here to perform the verification.")
+}
+
+type Order @doc(description: "Contains the order ID.") {
+    client_secret: String @doc(description: "The client secret of the PaymentIntent or SetupIntent that is associated with this order")
+}
+
+input StripePaymentMethodId {
+    payment_method: String! @doc(description: "The ID of a payment method object")
+    fingerprint: String @doc(description: "When this is passed, the action will be performed on all duplicate payment methods which match the fingerprint.")
+}
+
+type StripePaymentMethod {
+    id: ID! @doc(description: "Payment method ID")
+    created: Int @doc(description: "UNIX timestamp representing the date that the payment method was created.")
+    type: String @doc(description: "The type of the payment method, i.e. card, klarna, sepa_debit.")
+    fingerprint: String @doc(description: "A unique identifier for the card number, tax id, bank account etc.")
+    label: String @doc(description: "A formatted payment method label that you can display to the customer.")
+    icon: String @doc(description: "A payment method icon URL that can be used at the front-end.")
+    cvc: Boolean @doc(description: "Indicates whether this saved payment method requires a CVC token to be submitted when placing an order.")
+    brand: String @doc(description: "Card brand")
+    exp_month: Int @doc(description: "Card expiration month")
+    exp_year: Int @doc(description: "Card expiration year")
+}
+
+type Mutation {
+    addStripePaymentMethod(input: StripePaymentMethodId!): StripePaymentMethod @doc(description: "Saves a payment method on the logged in customer") @resolver(class: "\\StripeIntegration\\Payments\\Model\\GraphQL\\Resolver\\AddStripePaymentMethod")
+    listStripePaymentMethods: [StripePaymentMethod] @doc(description: "List all saved payment methods of a logged in customer") @resolver(class: "\\StripeIntegration\\Payments\\Model\\GraphQL\\Resolver\\ListStripePaymentMethods")
+    deleteStripePaymentMethod(input: StripePaymentMethodId!): String @doc(description: "Deletes a saved payment method from a logged in customer") @resolver(class: "\\StripeIntegration\\Payments\\Model\\GraphQL\\Resolver\\DeleteStripePaymentMethod")
+}
+
+type Query {
+    getStripeConfiguration: ModuleConfiguration @resolver(class: "\\StripeIntegration\\Payments\\Model\\GraphQL\\Resolver\\ModuleConfiguration") @doc(description: "Get the module's configuration to initialize Stripe Elements.")
+}
+
+type ModuleConfiguration {
+    apiKey: String @doc(description: "The Public Key of the Stripe payment.")
+    locale: String @doc(description: "Locale")
+    appInfo: [String] @doc(description: "Module Version and Partner ID etc")
+    options: ModuleOptions @doc(description: "Betas and API version")
+    elementsOptions: String @doc(description: "Serialized options that can be used to initialize the Elements object")
+}
+
+type ModuleOptions {
+    betas: [String] @doc(description: "Betas.")
+    apiVersion: String @doc(description: "API Version")
+}

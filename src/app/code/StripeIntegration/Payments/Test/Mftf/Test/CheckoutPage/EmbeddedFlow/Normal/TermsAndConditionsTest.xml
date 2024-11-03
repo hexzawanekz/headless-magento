@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="TermsAndConditionsTest" extends="PlaceOrderEmbeddedFlowTest">
+        <annotations>
+            <features value="Order"/>
+            <stories value="Embedded Flow"/>
+            <title value="Place an order while terms and conditions are enabled."/>
+            <description value="With GuestCustomer ; and a selected store view currency of USDCurrency , add to the cart the products of NormalCart , proceed to the checkout page and specify NewYorkAddress as the shipping address and FlatRateShippingMethod as the shipping method. Click Next and specify StripeElementsMethod as the payment method, filling successCard in the payment form. Finally click Place Order."/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="Normal"/>
+            <group value="checkout_orders"/>
+            <group value="guest_customer"/>
+            <group value="cart_normal"/>
+            <group value="card_success"/>
+            <group value="embedded_flow"/>
+            <group value="stripe"/>
+        </annotations>
+
+        <before>
+            <magentoCLI command="config:set checkout/options/enable_agreements 1" stepKey="setEnableTermsOnCheckout"/>
+
+            <actionGroup ref="AdminLoginActionGroup" stepKey="adminLogin"/>
+
+            <!-- Create New Terms and Condition entry -->
+            <actionGroup ref="AdminTermsConditionsOpenNewTermPageActionGroup" stepKey="openNewTerm"/>
+            <actionGroup ref="AdminTermsConditionsFillTermEditFormActionGroup" stepKey="fillNewTerm">
+                <argument name="term" value="activeHtmlTerm"/>
+            </actionGroup>
+
+            <!-- Save New Terms and Condition entry -->
+            <actionGroup ref="AdminTermsConditionsSaveTermActionGroup" stepKey="saveNewTerm"/>
+
+            <createData entity="ProductsCategory" stepKey="createCategory"/>
+            <createData entity="StripeSimpleProduct" stepKey="createProduct">
+                <requiredEntity createDataKey="createCategory"/>
+            </createData>
+        </before>
+
+        <actionGroup ref="SelectAccordionPaymentMethodActionGroup" stepKey="selectPaymentMethod">
+            <argument name="accordionButton" value="{{StorefrontStripePaymentMethodSection.paymentElementAccordionButtonCard}}" />
+        </actionGroup>
+
+        <actionGroup ref="FillCardDetailsActionGroup" stepKey="fillPaymentForm">
+            <argument name="CardNumber" value="{{Cards.successCard}}"/>
+        </actionGroup>
+
+        <actionGroup ref="CheckTermsAndConditionCheckboxInCheckoutActionGroup" after="waitForPlaceOrderButton" stepKey="assertTermInCheckout">
+            <argument name="termCheckboxText" value="{{activeHtmlTerm.checkboxText}}"/>
+        </actionGroup>
+
+        <actionGroup ref="SkipActionGroup" stepKey="authorizeExternally"/>
+
+        <after>
+            <magentoCLI command="config:set checkout/options/enable_agreements 0" stepKey="setEnableTermsOnCheckout"/>
+
+            <deleteData createDataKey="createProduct" stepKey="deleteProduct"/>
+            <deleteData createDataKey="createCategory" stepKey="deleteCategory"/>
+
+            <!-- Delete the active term -->
+            <actionGroup ref="AdminTermsConditionsOpenGridActionGroup" stepKey="openTermsGridToDelete"/>
+            <actionGroup ref="AdminTermsConditionsEditTermByNameActionGroup" stepKey="openTermToDelete">
+                <argument name="termName" value="{{activeHtmlTerm.name}}"/>
+            </actionGroup>
+            <actionGroup ref="AdminTermsConditionsDeleteTermByNameActionGroup" stepKey="deleteOpenedTerm"/>
+
+            <!-- Admin Logout -->
+            <actionGroup ref="AdminLogoutActionGroup" stepKey="adminLogout"/>
+        </after>
+    </test>
+</tests>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="KlarnaExternalAuthenticationActionGroup">
+        <annotations>
+            <description>Clicks on the 'Place Order' button. Waits for the Klarna additional popup modal is to open.</description>
+        </annotations>
+        <arguments>
+            <argument name="otp" defaultValue="123456" type="string"/>
+        </arguments>
+
+        <wait time="10" stepKey="waitForKlarnaModalToRender"/>
+
+        <!-- Switch To Apf Iframe -->
+        <waitForElement selector="{{StorefrontCheckoutKlarnaSection.klarnaApfIframe}}" time="60" stepKey="waitForApfIframe"/>
+        <switchToIFrame selector="{{StorefrontCheckoutKlarnaSection.klarnaApfIframe}}" stepKey="switchToApfIframe"/>
+
+        <!-- Check phone number and Click Continue button -->
+        <waitForElementVisible selector="{{StorefrontCheckoutKlarnaSection.klarnaOnContinueButton}}" time="60" stepKey="waitForContinueButtonVisible"/>
+        <click selector="{{StorefrontCheckoutKlarnaSection.klarnaOnContinueButton}}" stepKey="clickOnContinueButtonToOpen"/>
+
+        <!-- Fill OTP -->
+        <waitForElementVisible selector="{{StorefrontCheckoutKlarnaSection.klarnaOtpField}}" time="60" stepKey="waitForOtpField"/>
+        <fillField  userInput="{{otp}}" selector="{{StorefrontCheckoutKlarnaSection.klarnaOtpField}}" stepKey="fillOtp"/>
+
+        <!-- Select Payment category and click on Continue button -->
+        <waitForElement selector="{{StorefrontCheckoutKlarnaSection.klarnaPayLaterField}}" time="60" stepKey="waitForPayLaterField"/>
+        <selectOption userInput="pay_later" selector="{{StorefrontCheckoutKlarnaSection.klarnaPayLaterField}}" stepKey="checkPayLaterField"/>
+        <click selector="{{StorefrontCheckoutKlarnaSection.klarnaSelectPaymentCategoryButton}}" stepKey="clickOnCategorySelectButton"/>
+
+        <!-- Wait for confirmation button and click on it -->
+        <waitForElement selector="{{StorefrontCheckoutKlarnaSection.klarnaConfirmAndPayButton}}" time="60" stepKey="waitConfirmationButtonToOpen"/>
+        <wait time="3" stepKey="waitSometimeBeforeSubmitButton"/>
+        <click selector="{{StorefrontCheckoutKlarnaSection.klarnaConfirmAndPayButton}}" stepKey="clickConfirmationButtonToOpen"/>
+
+        <switchToIFrame stepKey="switchOutOfApfIframe"/>
+
+    </actionGroup>
+</actionGroups>

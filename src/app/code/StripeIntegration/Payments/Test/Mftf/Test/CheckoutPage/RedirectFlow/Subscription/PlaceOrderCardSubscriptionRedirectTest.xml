@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="PlaceOrderCardSubscriptionRedirectTest" extends="PlaceOrderRedirectFlowTest">
+        <annotations>
+            <features value="Order"/>
+            <stories value="Redirect Flow"/>
+            <title value="Place a subscription order using the redirect flow."/>
+            <description value="With GuestCustomer ; and a selected store view currency of USDCurrency , add to the cart the products of NormalCart , proceed to the checkout page and specify NewYorkAddress as the shipping address and FlatRateShippingMethod as the shipping method. Click Next and specify StripeCheckoutMethod as the payment method, filling successCard in the payment form. Finally click Place Order."/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="Subscriptions"/>
+            <group value="checkout_orders"/>
+            <group value="guest_customer"/>
+            <group value="cart_subscription"/>
+            <group value="card_success"/>
+            <group value="redirect_flow"/>
+            <group value="stripe"/>
+        </annotations>
+
+        <before>
+            <createData entity="ProductsCategory" stepKey="createCategory"/>
+            <createData entity="SimpleMonthlySubscriptionProduct" stepKey="createProduct">
+                <requiredEntity createDataKey="createCategory"/>
+            </createData>
+            <magentoCLI command="stripe:mftf:configure-subscription-product $$createProduct.id$$ SimpleMonthlySubscription" stepKey="configureSubscriptionProduct"/>
+        </before>
+
+        <actionGroup ref="SubscriptionCartActionGroup" stepKey="createCart" />
+
+        <actionGroup ref="SkipActionGroup" stepKey="waitForStripePaymentMethodCheckbox" />
+        <actionGroup ref="SkipActionGroup" stepKey="selectStripePaymentMethod" />
+
+        <after>
+            <deleteData createDataKey="createProduct" stepKey="deleteProduct"/>
+            <deleteData createDataKey="createCategory" stepKey="deleteCategory"/>
+        </after>
+    </test>
+</tests>

@@ -1,0 +1,17 @@
+<?php
+/** @var \StripeIntegration\Tax\Block\Adminhtml\System\Config\Form\Field\ActiveTaxRegistrations $block */
+?>
+<tr id="row_<?= $block->getElement()->getHtmlId(); ?>">
+    <td class="label">
+        <label for="<?= $block->escapeHtml($block->getElement()->getHtmlId()); ?>"><?= $block->escapeHtml($block->getElement()->getLabel()); ?></label>
+    </td>
+    <td class="value stripe_tax_registrations">
+        <p class="<?= $block->escapeHtml($block->getIsActiveClass()) ?> registrations">
+            <?= $block->escapeHtml($block->getTaxRegistrations()); ?>
+        </p>
+        <div class="links">
+            <p>&rarr; <a href="https://dashboard.stripe.com/<?= $block->escapeHtml($block->getTestPrefix()) ?>tax/registrations" target="_blank">Register a new tax location</a></p>
+            <p>&rarr; <a href="https://dashboard.stripe.com/<?= $block->escapeHtml($block->getTestPrefix()) ?>tax/thresholds" target="_blank">View your potential tax registration obligations</a></p>
+        </div>
+    </td>
+</tr>

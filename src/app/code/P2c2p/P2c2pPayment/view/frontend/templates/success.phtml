@@ -1,0 +1,54 @@
+<?php
+
+$request = $this->getResponseParams();
+
+if(empty($request)) {
+	die("Aunthentication Error: Payment transection fail.");
+}
+
+$objCustomerDetail = $this->getCustomerDetail();
+$strCurrencyCode = $this->getBaseCurrencyCode();
+
+$home_url = $block->getUrl();
+$channel_response_code = $request['channel_response_code'];
+$current_order = $request['order_id'];
+$order_id = $request['order_id'];
+$transaction_ref = $request['transaction_ref'];
+
+$objCustomerOrderDetail  = $this->getOrderDetails($order_id);
+$floatGrandTotal = $objCustomerOrderDetail->getGrandTotal();
+$floatGrandTotal = round($floatGrandTotal,2);
+$floatGrandTotal = number_format($floatGrandTotal, 2, '.', '.');
+$strCustomerName = '';
+
+if($objCustomerDetail->isLoggedIn()) {
+	$strCustomerName = $objCustomerDetail->getCustomer()->getName();	
+} else {
+	$strCustomerName = 'Guest';
+}
+
+?>
+<div class="col-main">
+	<div class="page-title"><h1> <?php echo __('Your order has been received') .'  '. __($strCustomerName) . __('.') ?> </h1></div>
+	<?php if(strcasecmp($channel_response_code, "000") == 0 || strcasecmp($channel_response_code, "00") == 0) {  ?>
+	<h2 class="sub-title"> <?php echo __('Thank you for your purchase!') ?> </h2> 
+	<p> <?php echo __('We have received your payment successfully.') ?> </p>
+	<?php } ?>
+
+	<?php if(strcasecmp($channel_response_code, "001") == 0) {  ?>
+	<h2 class="sub-title"> <?php echo __('Thank you for your purchase!') ?> </h2> 
+	<p> <?php echo __('Your payment is pending, please make the payment before expiry.') ?> </p>
+	<?php } ?>
+
+	<p><?php echo __('Your Refrence order ID is:') .' '. __($transaction_ref); ?> </p>
+	<p>Your order ID is: <a href="<?php echo $home_url;?>sales/order/view/order_id/<?php echo $order_id;?>"><?php echo $order_id;?></a> </p>
+	<p>Your Purchase Amount is: <?php echo $floatGrandTotal;?>&nbsp;&nbsp;<?php echo __($strCurrencyCode) ?> </p>	
+
+	<p> <?php echo __('You will receive an order confirmation email with details of your order and a link to track its progress.') ?> </p>
+
+	<p>Click <a href="<?php echo $home_url;?>sales/order/print/order_id/<?php echo $current_order;?>" onclick="this.target='_blank'">here to print</a> a copy of your order confirmation. </p>
+
+	<div class="primary">
+		<button type="button" class="action primary continue" title="Continue Shopping" onclick="window.location='<?php echo $home_url;?>'"><span><span>Continue Shopping</span></span></button>
+	</div>
+</div>

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+    <test name="PlaceOrderSavedCard3DSTest">
+        <annotations>
+            <features value="Order"/>
+            <stories value="Embedded Flow"/>
+            <title value="General customer normal order with Stripe saved card payment method and 3D secure card"/>
+            <description value="With General Customer ; and a selected store view currency of USDCurrency , save the new payment method, add to the cart the products of NormalCart , proceed to the checkout page and specify NewYorkAddress as the shipping address and FlatRateShippingMethod as the shipping method. Click Next and specify StripeElementsMethod as the payment method, using saved payment method. Finally click Place Order."/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="Normal"/>
+            <group value="cart_normal"/>
+            <group value="payment_method_card"/>
+            <group value="payment_method_saved"/>
+            <group value="payment_method_saved_card"/>
+            <group value="card_authentication_required"/>
+            <group value="embedded_flow"/>
+            <group value="customer_registered"/>
+            <group value="stripe"/>
+        </annotations>
+
+        <before>
+            <actionGroup ref="ConfigureModuleActionGroup" stepKey="configureModule"></actionGroup>
+            <magentoCLI command="config:set payment/stripe_payments/save_payment_method 1" stepKey="enableSavePaymentMethods"/>
+            <createData entity="ProductsCategory" stepKey="createCategory"/>
+            <createData entity="StripeSimpleProduct" stepKey="createProduct">
+                <requiredEntity createDataKey="createCategory"/>
+            </createData>
+            <createData entity="SimpleStripeCustomer" stepKey="createCustomer"/>
+        </before>
+
+        <!-- Store front customer login -->
+        <actionGroup ref="LoginToStorefrontActionGroup" stepKey="storefrontCustomerLogin">
+            <argument name="Customer" value="$$createCustomer$$"/>
+        </actionGroup>
+
+        <actionGroup ref="StorefrontNavigatePaymentMethodPageActionGroup" stepKey="navigateToPaymentMethodPage" />
+
+        <!-- Fill Payment data into the form -->
+        <actionGroup ref="FillDataOnNewPaymentMethodFormActionGroup" stepKey="fillDataPaymentMethod">
+            <argument name="CardNumber" value="{{Cards.authenticationRequiredCard2}}"/>
+        </actionGroup>
+
+        <!-- Save the payment method -->
+        <actionGroup ref="Save3DSCardActionGroup" stepKey="saveNewPaymentMethod"/>
+
+        <!-- Authenticate the payment method -->
+        <actionGroup ref="ClickThreeDSecureActionGroup" stepKey="completeSavedCardAuthentication"/>
+
+        <waitForElementVisible selector="{{StorefrontCustomerPaymentMethodsFormSection.successMessage}}" stepKey="waitForSuccessMessageIsVisible"/>
+        <seeElement selector="{{StorefrontCustomerPaymentMethodsFormSection.successMessage}}" stepKey="seeSuccessMessage"/>
+
+        <!-- Navigate to the product page -->
+        <amOnPage url="{{StorefrontProductPage.url(StripeSimpleProduct.urlKey)}}" stepKey="navigateToSimpleProductPage"/>
+        <waitForPageLoad stepKey="waitForSimpleProductPageLoad"/>
+
+        <!-- Add Simple Product to cart -->
+        <actionGroup ref="AddToCartFromStorefrontProductPageActionGroup" stepKey="addToCartFromStorefrontProductPage">
+            <argument name="productName" value="StripeSimpleProduct.name"/>
+        </actionGroup>
+
+        <!-- Go to checkout -->
+        <actionGroup ref="GoToCheckoutFromMinicartActionGroup" stepKey="goToCheckoutFromMinicart"/>
+        <actionGroup ref="CheckoutSelectFlatRateShippingMethodActionGroup" stepKey="selectFlatRate"/>
+        <actionGroup ref="StorefrontCheckoutForwardFromShippingStepActionGroup" stepKey="goToReview"/>
+
+        <actionGroup ref="SelectStripeActionGroup" stepKey="selectStripePaymentMethod"/>
+
+        <!-- Select the payment method -->
+        <actionGroup ref="SelectPaymentMethodActionGroup" stepKey="selectPaymentMethod">
+            <argument name="MethodSelector" value="{{StorefrontStripePaymentMethodSection.checkPaymentMethodByName('Pay by Card')}}"/>
+        </actionGroup>
+
+        <!-- Place the order -->
+        <actionGroup ref="ClickPlaceOrderAuthenticationRequiredSavedCardActionGroup" stepKey="clickPlaceOrder"/>
+
+        <!-- Complete the secure authentication popup -->
+        <actionGroup ref="ClickThreeDSecureActionGroup" stepKey="authenticateSavedCard"/>
+
+        <waitForPageLoad stepKey="waitForCheckout" time="30" />
+
+        <!-- See success message is display -->
+        <see selector="{{CheckoutSuccessMainSection.successTitle}}" userInput="Thank you for your purchase!" stepKey="waitForLoadSuccessPage" after="waitForCheckout"/>
+
+        <actionGroup ref="StorefrontCustomerLogoutActionGroup" stepKey="logoutStorefront"/>
+
+        <after>
+            <magentoCLI command="config:set payment/stripe_payments/save_payment_method 0" stepKey="disableSavePaymentMethods"/>
+            <deleteData createDataKey="createProduct" stepKey="deleteProduct"/>
+            <deleteData createDataKey="createCategory" stepKey="deleteCategory"/>
+            <deleteData createDataKey="createCustomer" stepKey="deleteCustomer"/>
+        </after>
+    </test>
+</tests>
